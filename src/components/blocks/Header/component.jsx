@@ -8,6 +8,7 @@ import HeaderTitle from './HeaderTitle'
 import HeaderMenu from './HeaderMenu'
 import LogOutButton from '@/components/controls/LogOutButton'
 import CreateEventButton from '@/components/controls/CreateEventButton'
+import NextPrevButtons from './NextPrevButtons'
 
 import styles from './style'
 
@@ -32,8 +33,10 @@ const Header = () => {
             container
             direction="row"
             justify="flex-start"
+            alignItems="center"
           >
             <HeaderMenu />
+            <NextPrevButtons />
             <CreateEventButton />
           </Grid>
           <Grid item xs={2} container>

@@ -22,16 +22,19 @@ const HeaderMenu = () => {
       centered
     >
       <Tab
+        className={css(styles.tab)}
         label={
           <Link className={css(styles.link)}>Month</Link>
         }
         value={0} />
       <Tab
+        className={css(styles.tab)}
         label={
           <Link className={css(styles.link)}>Week</Link>
         }
         value={1} />
       <Tab
+        className={css(styles.tab)}
         label={
           <Link className={css(styles.link)}>Day</Link>
         }

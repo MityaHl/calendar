@@ -1,11 +1,13 @@
 import { StyleSheet } from 'aphrodite'
 
 export default StyleSheet.create({
-  link: {
-    color: '#fff',
+  buttons: {
+    marginLeft: '25px',
   },
-  tab: {
+  button: {
+    color: '#fff',
+    maxWidth: '20px',
     backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    marginRight: '5px',
+    marginLeft: '5px',
   },
 })
