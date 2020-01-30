@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button'
 
 import styles from './styles'
 
-const LogOutButton = () => {
+const CreateEventButton = () => {
   return (
     <Button
       variant="outlined"
@@ -16,4 +16,4 @@ const LogOutButton = () => {
   )
 }
 
-export default LogOutButton
+export default CreateEventButton

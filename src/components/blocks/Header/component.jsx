@@ -5,10 +5,8 @@ import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 
 import HeaderTitle from './HeaderTitle'
-import HeaderMenu from './HeaderMenu'
 import LogOutButton from '@/components/controls/LogOutButton'
 import CreateEventButton from '@/components/controls/CreateEventButton'
-import NextPrevButtons from './NextPrevButtons'
 
 import styles from './style'
 
@@ -19,7 +17,7 @@ const Header = () => {
         <Grid container alignItems="center">
           <Grid
             item
-            xs={3}
+            xs={2}
             container
             direction="row"
             justify="center"
@@ -29,17 +27,21 @@ const Header = () => {
           </Grid>
           <Grid
             item
-            xs={7}
+            xs={8}
             container
             direction="row"
-            justify="flex-start"
+            justify="center"
             alignItems="center"
           >
-            <HeaderMenu />
-            <NextPrevButtons />
             <CreateEventButton />
           </Grid>
-          <Grid item xs={2} container>
+          <Grid
+            item
+            xs={2}
+            container
+            direction="row"
+            justify="center"
+          >
             <LogOutButton />
           </Grid>
         </Grid>

@@ -1,3 +1,3 @@
-import LogOutButton from './component'
+import LogOutButton from './container'
 
 export default LogOutButton

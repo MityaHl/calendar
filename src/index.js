@@ -1,12 +1,13 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import App from './App'
+import AppContainer from './AppContainer'
 import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import './index.css'
 import 'antd/dist/antd.css'
+import 'react-big-calendar/lib/css/react-big-calendar.css'
 import reducer from './store/reducers'
 
 const sagaMiddleware = createSagaMiddleware()
@@ -17,7 +18,7 @@ const store = createStore(
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <AppContainer/>
   </Provider>,
   document.getElementById('root'),
 )
