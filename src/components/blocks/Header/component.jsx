@@ -6,11 +6,11 @@ import Toolbar from '@material-ui/core/Toolbar'
 
 import HeaderTitle from './HeaderTitle'
 import LogOutButton from '@/components/controls/LogOutButton'
-import CreateEventButton from '@/components/controls/CreateEventButton'
+import CreateEventModal from '@/components/modals/CreateEventModal'
 
 import styles from './style'
 
-const Header = () => {
+const Header = ({ login }) => {
   return (
     <AppBar position="static" className={css(styles.header)}>
       <Toolbar>
@@ -33,7 +33,7 @@ const Header = () => {
             justify="center"
             alignItems="center"
           >
-            <CreateEventButton />
+            {login && <CreateEventModal />}
           </Grid>
           <Grid
             item
@@ -42,7 +42,7 @@ const Header = () => {
             direction="row"
             justify="center"
           >
-            <LogOutButton />
+            {login && <LogOutButton />}
           </Grid>
         </Grid>
       </Toolbar>

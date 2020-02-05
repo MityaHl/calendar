@@ -6,23 +6,10 @@ import Typography from '@material-ui/core/Typography'
 
 import styles from './styles'
 
-const Login = ({ state, onLogIn }) => {
+const Login = ({ state, onLogIn, getEvents }) => {
   const signIn = () => {
-    window.gapi.load('client:auth2', () => {
-      window.gapi.client
-        .init({
-          apiKey: 'AIzaSyC0LlE4TTsGdXM2EKJ8Gpubjk3_ctIs_cc',
-          clientId: '816106006496-qo93s99ofq2blmontijj9a41j3jifv6h.apps.googleusercontent.com',
-          discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"],
-          scope: 'https://www.googleapis.com/auth/calendar',
-        })
-        .then(() => {
-          console.log('init Ok')
-        })
-
-      window.gapi.auth2.getAuthInstance().signIn().then(user => {
-        onLogIn(user)
-      })
+    window.gapi.auth2.getAuthInstance().signIn().then(user => {
+      onLogIn(user)
     })
   }
 

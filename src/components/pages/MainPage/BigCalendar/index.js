@@ -1,3 +1,3 @@
-import BigCalendar from './component'
+import BigCalendar from './container'
 
 export default BigCalendar

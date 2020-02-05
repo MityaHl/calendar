@@ -1,4 +1,4 @@
 export const logout = () => ({
   type: 'LOGOUT',
-  payload: '',
+  payload: false,
 })

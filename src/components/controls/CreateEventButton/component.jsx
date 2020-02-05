@@ -1,18 +1,13 @@
 import React from 'react'
 import { css } from 'aphrodite'
 import Button from '@material-ui/core/Button'
+import CreateEventModal from '@/components/modals/CreateEventModal'
 
 import styles from './styles'
 
-const CreateEventButton = () => {
+const CreateEventButton = ({ state, onAddEvent }) => {
   return (
-    <Button
-      variant="outlined"
-      color="primary"
-      className={css(styles.button)}
-    >
-      Create event
-    </Button>
+    <CreateEventModal className={css(styles.button)} />
   )
 }
 

@@ -8,6 +8,8 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import './index.css'
 import 'antd/dist/antd.css'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
+
+import rootSaga from './sagas'
 import reducer from './store/reducers'
 
 const sagaMiddleware = createSagaMiddleware()
@@ -15,6 +17,8 @@ const store = createStore(
   reducer,
   composeWithDevTools(applyMiddleware(sagaMiddleware)),
 )
+
+sagaMiddleware.run(rootSaga)
 
 ReactDOM.render(
   <Provider store={store}>

@@ -1,44 +1,47 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { css } from 'aphrodite'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
+
+import EditEventModal from '@/components/modals/EditEventModal'
 
 import styles from './styles'
 
 const localizer = momentLocalizer(moment)
 
-const MyCalendar = () => {
-  const [events, setEvents] = useState([])
+const MyCalendar = ({ state, getEvents, onDeleteEvent }) => {
+  const [event, setEvent] = useState({})
 
   useEffect(() => {
-    window.gapi.client.calendar.events.list({
-      calendarId: 'primary',
-      timeMin: (new Date()).toISOString(),
-      showDeleted: false,
-      singleEvents: true,
-      maxResults: 10,
-      orderBy: 'startTime',
-    }).then(response => {
-      setEvents(response.result.items.map((item, index) => (
-        {
-          key: item.id,
-          title: item.summary,
-          start: new Date(item.start.dateTime),
-          end: new Date(item.end.dateTime),
-        }
-      )))
-    })
+    getEvents()
   }, [])
 
-  console.log(events)
+  const deleteEvent = event => {
+    onDeleteEvent(event.key)
+  }
+
+  const openEditDialog = event => {
+    setEvent(event)
+  }
+
+  const closeEditDialog = () => {
+    setEvent({})
+  }
 
   return (
-    <Calendar
-      className={css(styles.calendar)}
-      localizer={localizer}
-      startAccessor="start"
-      events={events}
-      endAccessor="end" />
+    <div>
+      <Calendar
+        className={css(styles.calendar)}
+        localizer={localizer}
+        startAccessor="start"
+        events={state.events}
+        onSelectEvent={openEditDialog}
+        endAccessor="end" />
+      <EditEventModal
+        isOpen={!!event.title}
+        event={event}
+        closeEditDialog={closeEditDialog} />
+    </div>
   )
 }
 
