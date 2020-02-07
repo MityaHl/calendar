@@ -1,5 +1,6 @@
 import React from 'react'
 import { css } from 'aphrodite'
+import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
@@ -8,14 +9,15 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import { MuiPickersUtilsProvider, KeyboardDateTimePicker } from '@material-ui/pickers'
+import { MuiPickersUtilsProvider, KeyboardDateTimePicker, KeyboardDatePicker } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
 import Select from '@material-ui/core/Select'
-import Input from '@material-ui/core/Input'
 import ListItemText from '@material-ui/core/ListItemText'
 import Checkbox from '@material-ui/core/Checkbox'
 import MenuItem from '@material-ui/core/MenuItem'
 import InputLabel from '@material-ui/core/InputLabel'
+import FormControl from '@material-ui/core/FormControl'
+import Input from '@material-ui/core/Input'
 
 import styles from './styles'
 
@@ -25,10 +27,10 @@ const CreateEventModal = ({ state, onAddEvent }) => {
   const [startDate, setStartDate] = React.useState(new Date())
   const [endDate, setEndDate] = React.useState(new Date())
   const [color, setColor] = React.useState(1)
-  const [repeatFormat, setRepeateFormat] = React.useState(0)
+  const [repeatFormat, setRepeateFormat] = React.useState('DAILY')
   const [daysForRepeat, setDaysForRepeat] = React.useState([])
-  const [daysInterval, setDaysInterval] = React.useState(1)
-  const [hoursInterval, setHoursInterval] = React.useState(1)
+  const [interval, setInterval] = React.useState(1)
+  const [endAfterDate, setEndAfterDate] = React.useState(new Date())
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -46,8 +48,8 @@ const CreateEventModal = ({ state, onAddEvent }) => {
       color,
       repeatFormat,
       daysForRepeat,
-      daysInterval,
-      hoursInterval,
+      interval,
+      endAfterDate,
     })
     handleClose()
   }
@@ -138,63 +140,67 @@ const CreateEventModal = ({ state, onAddEvent }) => {
           <Select
             className={css(styles.select)}
             value={repeatFormat}
-            onChange={event => [
+            onChange={event => {
               setRepeateFormat(event.target.value)
-            ]}
+            }}
           >
             {
               state.repeatFormat.map((format, index) => (
-                <MenuItem key={index} value={index}>
+                <MenuItem key={index} value={format}>
                   {format}
                 </MenuItem>
               ))
             }
           </Select>
+          <TextField
+            label="Interval"
+            value={interval}
+            onChange={event => {
+              setInterval(event.target.value)
+            }}
+            className={css(styles.textFields)}
+            fullWidth />
           {
-            repeatFormat === 0 && (
-              <TextField
-                label="Interval"
-                value={hoursInterval}
-                onChange={event => {
-                  setHoursInterval(event.target.value)
-                }}
-                className={css(styles.textFields)}
-                fullWidth />
+            repeatFormat === 'WEEKLY' && (
+              <FormControl className={css(styles.select)}>
+                <InputLabel>Days for repeat</InputLabel>
+                <Select
+                  multiple
+                  value={daysForRepeat}
+                  input={<Input />}
+                  className={css(styles.select)}
+                  onChange={event => {
+                    setDaysForRepeat(event.target.value)
+                  }}
+                  renderValue={selected => selected.join(', ')}
+                >
+                  {state.weekDays.map((day, index) => (
+                    <MenuItem value={day} key={index}>
+                      <Checkbox checked={daysForRepeat.indexOf(day) > -1} />
+                      <ListItemText primary={day} />
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             )
           }
-          {
-            repeatFormat === 1 && (
-              <TextField
-                label="Interval"
-                value={daysInterval}
-                onChange={event => {
-                  setDaysInterval(event.target.value)
-                }}
-                className={css(styles.textFields)}
-                fullWidth />
-            )
-          }
-          {
-            repeatFormat === 2 && (
-              <Select
-                multiple
-                value={daysForRepeat}
-                input={<Input />}
-                className={css(styles.select)}
-                onChange={event => {
-                  setDaysForRepeat(event.target.value)
-                }}
-                renderValue={selected => selected.join(', ')}
-              >
-                {state.weekDays.map((day, index) => (
-                  <MenuItem value={day} key={index}>
-                    <Checkbox checked={daysForRepeat.indexOf(day) > -1} />
-                    <ListItemText primary={day} />
-                  </MenuItem>
-                ))}
-              </Select>
-            )
-          }
+          <MuiPickersUtilsProvider
+            utils={DateFnsUtils}
+            className={css(styles.textFields)}
+          >
+            <KeyboardDatePicker
+              disableToolbar
+              variant="inline"
+              format="yyyy/MM/dd"
+              margin="normal"
+              label="Repeate till"
+              value={endAfterDate}
+              onChange={setEndAfterDate}
+              className={css(styles.endAfterDataInput)}
+              KeyboardButtonProps={{
+                'aria-label': 'change date',
+              }} />
+          </MuiPickersUtilsProvider>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
@@ -207,6 +213,11 @@ const CreateEventModal = ({ state, onAddEvent }) => {
       </Dialog>
     </Grid>
   )
+}
+
+CreateEventModal.propTypes = {
+  state: PropTypes.object,
+  onAddEvent: PropTypes.func,
 }
 
 export default CreateEventModal

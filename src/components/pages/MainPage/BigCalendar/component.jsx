@@ -1,31 +1,37 @@
 import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 import { css } from 'aphrodite'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
 
 import EditEventModal from '@/components/modals/EditEventModal'
+import CreateFastEventModal from '@/components/modals/CreateFastEventModal'
 
 import styles from './styles'
 
 const localizer = momentLocalizer(moment)
 
-const MyCalendar = ({ state, getEvents, onDeleteEvent }) => {
-  const [event, setEvent] = useState({})
+const MyCalendar = ({ state, getEvents, getEvent, closeEvent }) => {
+  const [dateForFastCreate, setDateForFastCreate] = React.useState()
 
   useEffect(() => {
     getEvents()
   }, [])
 
-  const deleteEvent = event => {
-    onDeleteEvent(event.key)
-  }
-
   const openEditDialog = event => {
-    setEvent(event)
+    getEvent(event.recurringEventId)
   }
 
   const closeEditDialog = () => {
-    setEvent({})
+    closeEvent()
+  }
+
+  const openFastCreateOpen = data => {
+    setDateForFastCreate(data)
+  }
+
+  const closeFastCreateOpen = () => {
+    setDateForFastCreate(false)
   }
 
   return (
@@ -36,13 +42,24 @@ const MyCalendar = ({ state, getEvents, onDeleteEvent }) => {
         startAccessor="start"
         events={state.events}
         onSelectEvent={openEditDialog}
+        onDrillDown={openFastCreateOpen}
         endAccessor="end" />
       <EditEventModal
-        isOpen={!!event.title}
-        event={event}
+        isOpen={!!state.eventsForChange.key}
         closeEditDialog={closeEditDialog} />
+      <CreateFastEventModal
+        open={!!dateForFastCreate}
+        date={dateForFastCreate}
+        closeFastCreateOpen={closeFastCreateOpen} />
     </div>
   )
+}
+
+MyCalendar.propTypes = {
+  state: PropTypes.object,
+  getEvents: PropTypes.func,
+  getEvent: PropTypes.func,
+  closeEvent: PropTypes.func,
 }
 
 export default MyCalendar

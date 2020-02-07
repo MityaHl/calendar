@@ -5,6 +5,7 @@ import spinner from './spinner'
 import colors from './colors'
 import weekDays from './weekDays'
 import repeatFormat from './repeatFormat'
+import eventsForChange from './eventsForChange'
 
 export default combineReducers({
   login,
@@ -13,4 +14,5 @@ export default combineReducers({
   colors,
   repeatFormat,
   weekDays,
+  eventsForChange,
 })

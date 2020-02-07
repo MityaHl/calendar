@@ -2,7 +2,7 @@ import { StyleSheet } from 'aphrodite'
 
 export default StyleSheet.create({
   calendar: {
-    height: '70vh',
+    height: 'calc(100vh - 80px)',
     marginTop: '15px',
   },
 })

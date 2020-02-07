@@ -1,5 +1,6 @@
 import React from 'react'
 import { css } from 'aphrodite'
+import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -13,7 +14,7 @@ import styles from './style'
 const Header = ({ login }) => {
   return (
     <AppBar position="static" className={css(styles.header)}>
-      <Toolbar>
+      <Toolbar className={css(styles.toolbar)}>
         <Grid container alignItems="center">
           <Grid
             item
@@ -48,6 +49,10 @@ const Header = ({ login }) => {
       </Toolbar>
     </AppBar>
   )
+}
+
+Header.propTypes = {
+  login: PropTypes.bool,
 }
 
 export default Header

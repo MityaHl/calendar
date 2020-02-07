@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 
-import { onDeleteEvent, getEvents } from '@/store/actions/events'
+import { getEvents, getEvent, closeEvent } from '@/store/actions/events'
 
 import BigCalendar from './component'
 
@@ -9,8 +9,9 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onDeleteEvent: data => dispatch(onDeleteEvent(data)),
   getEvents: () => dispatch(getEvents()),
+  getEvent: id => dispatch(getEvent(id)),
+  closeEvent: () => dispatch(closeEvent()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(BigCalendar)

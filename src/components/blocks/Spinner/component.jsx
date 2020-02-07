@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { css } from 'aphrodite'
 import ClipLoader from 'react-spinners/ClipLoader'
 import Grid from '@material-ui/core/Grid'

@@ -2,9 +2,9 @@ import { takeEvery, call, put } from 'redux-saga/effects'
 import { getEvents } from '@/store/actions/events'
 
 const loadEvents = data => {
-  console.log('1', data)
+  console.log(data)
   return window.gapi.client.calendar.events
-    .update({
+    .patch({
       calendarId: 'primary',
       eventId: data.id,
       resource: data,

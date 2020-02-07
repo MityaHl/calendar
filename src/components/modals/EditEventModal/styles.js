@@ -22,4 +22,8 @@ export default StyleSheet.create({
     width: '100%',
     marginTop: '10px',
   },
+  endAfterDataInput: {
+    marginTop: '10px',
+    width: '100%',
+  },
 })

@@ -1,10 +1,11 @@
 import React from 'react'
 import { css } from 'aphrodite'
+import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button'
 
 import styles from './styles'
 
-const LogOutButton = ({ state, onLogOut }) => {
+const LogOutButton = ({ onLogOut }) => {
   const logOut = () => {
     window.gapi.auth2.getAuthInstance().signOut().then(onLogOut)
   }
@@ -19,6 +20,10 @@ const LogOutButton = ({ state, onLogOut }) => {
       LogOut
     </Button>
   )
+}
+
+LogOutButton.propTypes = {
+  onLogOut: PropTypes.func,
 }
 
 export default LogOutButton

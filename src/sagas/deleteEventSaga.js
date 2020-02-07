@@ -2,6 +2,10 @@ import { takeEvery, call, put } from 'redux-saga/effects'
 import { getEvents } from '@/store/actions/events'
 
 const loadEvents = event => {
+  if (event.includes('_')) {
+    event = event.slice(0, event.indexOf('_'))
+  }
+
   return window.gapi.client.calendar.events
     .delete({
       calendarId: 'primary',

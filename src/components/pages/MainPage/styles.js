@@ -1,7 +1,3 @@
 import { StyleSheet } from 'aphrodite'
 
-export default StyleSheet.create({
-  mainPage: {
-    
-  },
-})
+export default StyleSheet.create({})

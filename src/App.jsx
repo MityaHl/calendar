@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import PropTypes from 'prop-types'
 import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
 
 import Header from './components/blocks/Header'
@@ -13,7 +14,7 @@ const App = ({ state, login, spinner, getColors }) => {
         .init({
           apiKey: 'AIzaSyC0LlE4TTsGdXM2EKJ8Gpubjk3_ctIs_cc',
           clientId: '816106006496-qo93s99ofq2blmontijj9a41j3jifv6h.apps.googleusercontent.com',
-          discoveryDocs: ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"],
+          discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
           scope: 'https://www.googleapis.com/auth/calendar',
         })
         .then(() => {
@@ -51,6 +52,13 @@ const App = ({ state, login, spinner, getColors }) => {
       </Switch>
     </BrowserRouter>
   )
+}
+
+App.propTypes = {
+  state: PropTypes.object,
+  login: PropTypes.bool,
+  spinner: PropTypes.bool,
+  getColors: PropTypes.func,
 }
 
 export default App

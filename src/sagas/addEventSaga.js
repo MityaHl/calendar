@@ -2,18 +2,18 @@ import { takeEvery, call, put } from 'redux-saga/effects'
 import { getEvents } from '@/store/actions/events'
 
 const loadEvents = data => {
-  console.log(data)
-  const weekly = 'RRULE:FREQ=WEEKLY;BYDAY=' + data.daysForRepeat.join(',') + ';INTERVAL=1;'
-  const daily = 'RRULE:FREQ=DAILY;INTERVAL=' + data.daysInterval
-  const hourly = 'RRULE:FREQ=DAILY;INTERVAL=' + data.hoursInterval + ';UNTIL=20200205T210000Z'
+  const afterData = data.endAfterDate.toISOString().replace(/[.]/g, '').replace(/[-]/g, '').replace(/[:]/g, '').slice(0, 8)
+  console.log(afterData)
+
+  const weekly = 'RRULE:FREQ=WEEKLY;BYDAY=' + data.daysForRepeat.join(',') +
+   ';INTERVAL=' + data.interval + ';UNTIL=' + afterData + 'T220000Z'
+  const daily = 'RRULE:FREQ=DAILY;INTERVAL=' + data.interval + ';UNTIL=' + afterData + 'T220000Z'
   let recurrenceData = ''
 
   switch (data.repeatFormat) {
-    case 0: recurrenceData = hourly
+    case 'DAILY': recurrenceData = daily
       break
-    case 1: recurrenceData = daily
-      break
-    case 2: recurrenceData = weekly
+    case 'WEEKLY': recurrenceData = weekly
       break
   }
 

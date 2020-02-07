@@ -15,6 +15,7 @@ function loadEvents () {
         start: new Date(item.start.dateTime),
         end: new Date(item.end.dateTime),
         color: item.colorId,
+        recurringEventId: item.recurringEventId,
       }
     ))
   })
