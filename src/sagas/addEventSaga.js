@@ -1,5 +1,6 @@
 import { takeEvery, call, put } from 'redux-saga/effects'
 import { getEvents } from '@/store/actions/events'
+import { ADD_EVENT } from '@/constants'
 
 const loadEvents = data => {
   const afterData = data.endAfterDate.toISOString().replace(/[.]/g, '').replace(/[-]/g, '').replace(/[:]/g, '').slice(0, 8)
@@ -50,5 +51,5 @@ function * putData (action) {
 }
 
 export function * watchAdd () {
-  yield takeEvery('ADD_EVENT', putData)
+  yield takeEvery(ADD_EVENT, putData)
 }

@@ -8,12 +8,6 @@ import Typography from '@material-ui/core/Typography'
 import styles from './styles'
 
 const Login = ({ onLogIn }) => {
-  const signIn = () => {
-    window.gapi.auth2.getAuthInstance().signIn().then(user => {
-      onLogIn(user)
-    })
-  }
-
   return (
     <Grid
       container
@@ -23,7 +17,7 @@ const Login = ({ onLogIn }) => {
       className={css(styles.grid)}
     >
       <Button
-        onClick={signIn}
+        onClick={onLogIn}
         variant="contained"
         className={css(styles.button)}
       >

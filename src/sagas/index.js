@@ -7,6 +7,8 @@ import { watchUpdate } from './changeEventSaga'
 import { watchColors } from './getEventColorsSaga'
 import { watchFastAdd } from './addFastEventSaga'
 import { watchOneEvent } from './getOneEventSaga'
+import { watchLogin } from './logInSaga'
+import { watchLoout } from './logOutSaga'
 
 export default function * rootSaga () {
   yield all([
@@ -17,5 +19,7 @@ export default function * rootSaga () {
     watchColors(),
     watchFastAdd(),
     watchOneEvent(),
+    watchLogin(),
+    watchLoout(),
   ])
 }

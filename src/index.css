@@ -11,3 +11,11 @@ body {
   }
 }
 
+@media (max-height: 600px){
+  .rbc-month-view{
+    height: 700px!important;
+  }
+}
+
+
+

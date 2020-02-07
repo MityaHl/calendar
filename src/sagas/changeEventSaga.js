@@ -1,5 +1,6 @@
 import { takeEvery, call, put } from 'redux-saga/effects'
 import { getEvents } from '@/store/actions/events'
+import { ON_CHANGE_EVENTS } from '@/constants'
 
 const loadEvents = data => {
   console.log(data)
@@ -21,5 +22,5 @@ function * putData (action) {
 }
 
 export function * watchUpdate () {
-  yield takeEvery('ON_CHANGE_EVENTS', putData)
+  yield takeEvery(ON_CHANGE_EVENTS, putData)
 }

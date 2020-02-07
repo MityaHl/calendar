@@ -26,6 +26,20 @@ const App = ({ state, login, spinner, getColors }) => {
     })
   }, [])
 
+  const PrivateRoute = ({ isAuth, component: Component, path }) => (
+    <Route
+      path={path}
+      render={
+        props => (isAuth
+          ? (
+            <Component />
+          )
+          : (
+            <Redirect to={{ pathname: '/' }} />
+          ))
+      } />
+  )
+
   return (
     <BrowserRouter>
       <Header />

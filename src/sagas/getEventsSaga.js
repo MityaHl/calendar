@@ -1,5 +1,6 @@
 import { takeEvery, call, put } from 'redux-saga/effects'
 import { onGetEvents } from '@/store/actions/events'
+import { ON_GET_EVENTS } from '@/constants'
 
 function loadEvents () {
   return window.gapi.client.calendar.events.list({
@@ -31,5 +32,5 @@ function * putData (action) {
 }
 
 export function * watchLoad () {
-  yield takeEvery('ON_GET_EVENTS', putData)
+  yield takeEvery(ON_GET_EVENTS, putData)
 }

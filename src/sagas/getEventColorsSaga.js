@@ -1,5 +1,6 @@
 import { takeEvery, call, put } from 'redux-saga/effects'
 import { onGetColors } from '@/store/actions/colors'
+import { GET_COLORS } from '@/constants'
 
 function loadEvents () {
   return window.gapi.client.calendar.colors.get()
@@ -23,5 +24,5 @@ function * putData (action) {
 }
 
 export function * watchColors () {
-  yield takeEvery('GET_COLORS', putData)
+  yield takeEvery(GET_COLORS, putData)
 }

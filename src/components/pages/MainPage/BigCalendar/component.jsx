@@ -12,13 +12,14 @@ import styles from './styles'
 const localizer = momentLocalizer(moment)
 
 const MyCalendar = ({ state, getEvents, getEvent, closeEvent }) => {
-  const [dateForFastCreate, setDateForFastCreate] = React.useState()
+  const [dateForFastCreate, setDateForFastCreate] = useState()
 
   useEffect(() => {
     getEvents()
   }, [])
 
   const openEditDialog = event => {
+    console.log(event)
     getEvent(event.recurringEventId)
   }
 
@@ -41,6 +42,11 @@ const MyCalendar = ({ state, getEvents, getEvent, closeEvent }) => {
         localizer={localizer}
         startAccessor="start"
         events={state.events}
+        eventPropGetter={event => ({
+          style: {
+            backgroundColor: state.colors[event.color - 1].background,
+          },
+        })}
         onSelectEvent={openEditDialog}
         onDrillDown={openFastCreateOpen}
         endAccessor="end" />

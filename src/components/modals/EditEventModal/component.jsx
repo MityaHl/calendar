@@ -15,6 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import ListItemText from '@material-ui/core/ListItemText'
+import CloseIcon from '@material-ui/icons/Close'
 import Input from '@material-ui/core/Input'
 import { Formik } from 'formik'
 
@@ -87,7 +88,27 @@ const EditEventModal = ({ state, isOpen, closeEditDialog, onChangeEvent, onDelet
       alignItems="center"
     >
       <Dialog open={isOpen} onClose={closeEditDialog}>
-        <DialogTitle>Edit event</DialogTitle>
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="center"
+        >
+          <Grid item xs={11}>
+            <DialogTitle>Edit event</DialogTitle>
+          </Grid>
+          <Grid
+            item
+            xs={1}
+            container
+            direction="row"
+            justify="flex-end"
+          >
+            <Button onClick={closeEditDialog} color="primary">
+              <CloseIcon />
+            </Button>
+          </Grid>
+        </Grid>
         <DialogContent>
           <Formik
             initialValues={{

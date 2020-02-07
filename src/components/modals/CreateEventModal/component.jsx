@@ -9,7 +9,11 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import { MuiPickersUtilsProvider, KeyboardDateTimePicker, KeyboardDatePicker } from '@material-ui/pickers'
+import {
+  MuiPickersUtilsProvider,
+  KeyboardDateTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
 import Select from '@material-ui/core/Select'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -18,6 +22,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import InputLabel from '@material-ui/core/InputLabel'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
+import CloseIcon from '@material-ui/icons/Close'
 
 import styles from './styles'
 
@@ -37,6 +42,14 @@ const CreateEventModal = ({ state, onAddEvent }) => {
   }
 
   const handleClose = () => {
+    setTitle('')
+    setStartDate(new Date())
+    setEndDate(new Date())
+    setColor(1)
+    setRepeateFormat('DAILY')
+    setDaysForRepeat([])
+    setInterval(1)
+    setEndAfterDate(new Date())
     setOpen(false)
   }
 
@@ -70,7 +83,27 @@ const CreateEventModal = ({ state, onAddEvent }) => {
         Create event
       </Button>
       <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Create event</DialogTitle>
+        <Grid
+          container
+          direction="row"
+          justify="center"
+          alignItems="center"
+        >
+          <Grid item xs={11}>
+            <DialogTitle>Create event</DialogTitle>
+          </Grid>
+          <Grid
+            item
+            xs={1}
+            container
+            direction="row"
+            justify="flex-end"
+          >
+            <Button onClick={handleClose} color="primary">
+              <CloseIcon />
+            </Button>
+          </Grid>
+        </Grid>
         <DialogContent>
           <DialogContentText>
             To create event, enter the following information...

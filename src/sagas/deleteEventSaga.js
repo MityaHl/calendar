@@ -1,5 +1,6 @@
 import { takeEvery, call, put } from 'redux-saga/effects'
 import { getEvents } from '@/store/actions/events'
+import { DELETE_EVENT } from '@/constants'
 
 const loadEvents = event => {
   if (event.includes('_')) {
@@ -23,5 +24,5 @@ function * putData (action) {
 }
 
 export function * watchDelete () {
-  yield takeEvery('DELETE_EVENT', putData)
+  yield takeEvery(DELETE_EVENT, putData)
 }
