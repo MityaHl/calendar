@@ -1,11 +1,9 @@
 import React from 'react'
-import { css } from 'aphrodite'
-
-import styles from './styles'
+import BigCalendar from './BigCalendar'
 
 const MainPage = () => {
   return (
-    <div >hhyhy</div>
+    <BigCalendar />
   )
 }
 
