@@ -19,6 +19,8 @@ import CloseIcon from '@material-ui/icons/Close'
 import Input from '@material-ui/core/Input'
 import { Formik } from 'formik'
 
+import EditEventRepeateFormatData from './EditEventRepeatFormatData'
+
 import styles from './styles'
 
 const moment = require('moment')
@@ -176,60 +178,11 @@ const EditEventModal = ({ state, isOpen, closeEditDialog, onChangeEvent, onDelet
                     ))
                   }
                 </Select>
-                <Select
-                  className={css(styles.select)}
-                  name="repeatFormat"
-                >
-                  {
-                    state.repeatFormat.map((format, index) => (
-                      <MenuItem key={index} value={format}>
-                        {format}
-                      </MenuItem>
-                    ))
-                  }
-                </Select>
-                <TextField
-                  label="Interval"
-                  name="interval"
-                  className={css(styles.textFields)}
-                  fullWidth />
-                {
-                  values.repeatFormat === 'WEEKLY' && (
-                    <FormControl className={css(styles.select)}>
-                      <InputLabel>Days for repeat</InputLabel>
-                      <Select
-                        multiple
-                        name="daysForRepeat"
-                        input={<Input />}
-                        className={css(styles.select)}
-                        renderValue={selected => selected.join(', ')}
-                      >
-                        {state.weekDays.map((day, index) => (
-                          <MenuItem value={day} key={index}>
-                            <Checkbox checked={values.daysForRepeat.indexOf(day) !== -1} />
-                            <ListItemText primary={day} />
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  )
-                }
-                <MuiPickersUtilsProvider
-                  utils={DateFnsUtils}
-                  className={css(styles.textFields)}
-                >
-                  <KeyboardDatePicker
-                    disableToolbar
-                    variant="inline"
-                    format="yyyy/MM/dd"
-                    margin="normal"
-                    label="Repeate till"
-                    name="endAfterDate"
-                    className={css(styles.endAfterDataInput)}
-                    KeyboardButtonProps={{
-                      'aria-label': 'change date',
-                    }} />
-                </MuiPickersUtilsProvider>
+                <EditEventRepeateFormatData
+                  weekDays={state.weekDays}
+                  daysForRepeat={values.daysForRepeat}
+                  repeatTypes={state.repeatFormat}
+                  repeatFormat={values.repeatFormat} />
                 <Grid
                   container
                   direction="row"

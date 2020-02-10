@@ -5,24 +5,17 @@ import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDateTimePicker,
-  KeyboardDatePicker,
-} from '@material-ui/pickers'
-import DateFnsUtils from '@date-io/date-fns'
-import Select from '@material-ui/core/Select'
-import ListItemText from '@material-ui/core/ListItemText'
-import Checkbox from '@material-ui/core/Checkbox'
-import MenuItem from '@material-ui/core/MenuItem'
 import InputLabel from '@material-ui/core/InputLabel'
-import FormControl from '@material-ui/core/FormControl'
-import Input from '@material-ui/core/Input'
 import CloseIcon from '@material-ui/icons/Close'
+
+import CreateEventButtons from './CreateEventActions'
+import CreateEventDates from './CreateEventDates'
+import CreateEventSetColor from './CreateEventSetColor'
+import CreateEventSetRepeatFormat from './CreateEventSetRepeatFormat'
+import CreateEventRepeateFormatData from './CreateEventRepeateFormatData'
 
 import styles from './styles'
 
@@ -116,133 +109,33 @@ const CreateEventModal = ({ state, onAddEvent }) => {
               setTitle(event.target.value)
             }}
             fullWidth />
-          <MuiPickersUtilsProvider
-            utils={DateFnsUtils}
-            className={css(styles.textFields)}
-          >
-            <Grid container justify="space-around">
-              <KeyboardDateTimePicker
-                disableToolbar
-                variant="inline"
-                format="yyyy/MM/dd hh:mm a"
-                margin="normal"
-                label="Start date"
-                value={startDate}
-                onChange={setStartDate}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }} />
-              <KeyboardDateTimePicker
-                disableToolbar
-                variant="inline"
-                format="yyyy/MM/dd hh:mm a"
-                margin="normal"
-                label="End date"
-                value={endDate}
-                onChange={setEndDate}
-                className={css(styles.endDataInput)}
-                KeyboardButtonProps={{
-                  'aria-label': 'change date',
-                }} />
-            </Grid>
-          </MuiPickersUtilsProvider>
+          <CreateEventDates
+            startDate={startDate}
+            setStartDate={setStartDate}
+            endDate={endDate}
+            setEndDate={setEndDate} />
           <InputLabel className={css(styles.label)}>
             Color
           </InputLabel>
-          <Select
-            className={css(styles.select)}
-            labelId="demo-simple-select-label"
-            id="demo-simple-select"
-            defaultValue={0}
-            onChange={event => {
-              setColor(event.target.value + 1)
-            }}
-          >
-            {
-              state.colors.map((color, index) => (
-                <MenuItem key={index} value={index}>
-                  <div
-                    className={css(styles.div)}
-                    style={{
-                      backgroundColor: color.background,
-                    }} />
-                </MenuItem>
-              ))
-            }
-          </Select>
-          <Select
-            className={css(styles.select)}
-            value={repeatFormat}
-            onChange={event => {
-              setRepeateFormat(event.target.value)
-            }}
-          >
-            {
-              state.repeatFormat.map((format, index) => (
-                <MenuItem key={index} value={format}>
-                  {format}
-                </MenuItem>
-              ))
-            }
-          </Select>
-          <TextField
-            label="Interval"
-            value={interval}
-            onChange={event => {
-              setInterval(event.target.value)
-            }}
-            className={css(styles.textFields)}
-            fullWidth />
-          {
-            repeatFormat === 'WEEKLY' && (
-              <FormControl className={css(styles.select)}>
-                <InputLabel>Days for repeat</InputLabel>
-                <Select
-                  multiple
-                  value={daysForRepeat}
-                  input={<Input />}
-                  className={css(styles.select)}
-                  onChange={event => {
-                    setDaysForRepeat(event.target.value)
-                  }}
-                  renderValue={selected => selected.join(', ')}
-                >
-                  {state.weekDays.map((day, index) => (
-                    <MenuItem value={day} key={index}>
-                      <Checkbox checked={daysForRepeat.indexOf(day) > -1} />
-                      <ListItemText primary={day} />
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            )
-          }
-          <MuiPickersUtilsProvider
-            utils={DateFnsUtils}
-            className={css(styles.textFields)}
-          >
-            <KeyboardDatePicker
-              disableToolbar
-              variant="inline"
-              format="yyyy/MM/dd"
-              margin="normal"
-              label="Repeate till"
-              value={endAfterDate}
-              onChange={setEndAfterDate}
-              className={css(styles.endAfterDataInput)}
-              KeyboardButtonProps={{
-                'aria-label': 'change date',
-              }} />
-          </MuiPickersUtilsProvider>
+          <CreateEventSetColor
+            colors={state.colors}
+            setColor={setColor} />
+          <CreateEventSetRepeatFormat
+            repeatFormat={repeatFormat}
+            setRepeateFormat={setRepeateFormat} />
+          <CreateEventRepeateFormatData
+            interval={interval}
+            setInterval={setInterval}
+            repeatFormat={repeatFormat}
+            daysForRepeat={daysForRepeat}
+            setDaysForRepeat={setDaysForRepeat}
+            weekDays={state.weekDays}
+            endAfterDate={endAfterDate}
+            setEndAfterDate={setEndAfterDate} />
         </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={addEvent} color="primary">
-            Create
-          </Button>
-        </DialogActions>
+        <CreateEventButtons
+          handleClose={handleClose}
+          addEvent={addEvent} />
       </Dialog>
     </Grid>
   )

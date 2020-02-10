@@ -70,8 +70,8 @@ const App = ({ state, login, spinner, getColors }) => {
 
 App.propTypes = {
   state: PropTypes.object,
-  login: PropTypes.bool,
-  spinner: PropTypes.bool,
+  login: PropTypes.func,
+  spinner: PropTypes.func,
   getColors: PropTypes.func,
 }
 
