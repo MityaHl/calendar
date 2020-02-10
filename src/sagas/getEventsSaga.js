@@ -1,6 +1,7 @@
 import { takeEvery, call, put } from 'redux-saga/effects'
 import { onGetEvents } from '@/store/actions/events'
 import { ON_GET_EVENTS } from '@/constants'
+import { getEventsMapper } from '@/helpers/mappers'
 
 function loadEvents () {
   return window.gapi.client.calendar.events.list({
@@ -9,20 +10,11 @@ function loadEvents () {
     singleEvents: true,
     orderBy: 'startTime',
   }).then(response => {
-    return response.result.items.map((item, index) => (
-      {
-        key: item.id,
-        title: item.summary,
-        start: new Date(item.start.dateTime),
-        end: new Date(item.end.dateTime),
-        color: item.colorId,
-        recurringEventId: item.recurringEventId,
-      }
-    ))
+    return getEventsMapper(response)
   })
 }
 
-function * putData (action) {
+function * putData () {
   try {
     const data = yield call(loadEvents)
     yield put(onGetEvents(data))

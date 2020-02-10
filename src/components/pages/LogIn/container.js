@@ -4,7 +4,9 @@ import { onLogin } from '@/store/actions/login'
 
 import LogIn from './component'
 
-const mapStateToProps = state => ({})
+const mapStateToProps = state => ({
+  login: state.login,
+})
 
 const mapDispatchToProps = dispatch => ({
   onLogIn: () => dispatch(onLogin()),

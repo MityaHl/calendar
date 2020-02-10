@@ -1,20 +1,15 @@
 import React from 'react'
 import { css } from 'aphrodite'
-import PropTypes from 'prop-types'
-
-import Select from '@material-ui/core/Select'
+import { Select } from 'formik-material-ui'
 import MenuItem from '@material-ui/core/MenuItem'
 
 import styles from './styles'
 
-const CreateEventSetColor = ({ colors, setColor }) => {
+const EditEventSetColor = ({ colors }) => {
   return (
     <Select
       className={css(styles.select)}
-      defaultValue={0}
-      onChange={event => {
-        setColor(event.target.value + 1)
-      }}
+      name="color"
     >
       {
         colors.map((color, index) => (
@@ -31,9 +26,4 @@ const CreateEventSetColor = ({ colors, setColor }) => {
   )
 }
 
-CreateEventSetColor.propTypes = {
-  colors: PropTypes.array,
-  setColor: PropTypes.func,
-}
-
-export default CreateEventSetColor
+export default EditEventSetColor

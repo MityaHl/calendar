@@ -1,26 +1,13 @@
 import { takeEvery, call, put } from 'redux-saga/effects'
 import { getEvents } from '@/store/actions/events'
 import { ADD_FAST_EVENT } from '@/constants'
+import { eventForFastCreate } from '@/helpers/mappers'
 
 const loadEvents = data => {
-  const afterData = data.date.toISOString().replace(/[.]/g, '').replace(/[-]/g, '').replace(/[:]/g, '').slice(0, 8)
-  const daily = 'RRULE:FREQ=DAILY;INTERVAL=1;UNTIL=' + afterData + 'T220000Z'
-
-  const event = {
-    summary: data.title,
-    start: {
-      dateTime: new Date(data.date).toISOString(),
-      timeZone: 'America/Los_Angeles',
-    },
-    end: {
-      dateTime: new Date(data.date).toISOString(),
-      timeZone: 'America/Los_Angeles',
-    },
-    colorId: 1,
-    recurrence: [
-      daily,
-    ],
-  }
+  const event = eventForFastCreate({
+    title: data.title,
+    date: data.date,
+  })
 
   return window.gapi.client.calendar.events
     .insert({
@@ -32,7 +19,7 @@ const loadEvents = data => {
 function * putData (action) {
   try {
     yield call(loadEvents, action.payload)
-    yield put(getEvents())
+    yield put(getEvents)
   } catch (error) {
     console.log(error)
   }

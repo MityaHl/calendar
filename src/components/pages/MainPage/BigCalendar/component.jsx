@@ -19,7 +19,6 @@ const MyCalendar = ({ state, getEvents, getEvent, closeEvent }) => {
   }, [])
 
   const openEditDialog = event => {
-    console.log(event)
     getEvent(event.recurringEventId)
   }
 
@@ -44,7 +43,7 @@ const MyCalendar = ({ state, getEvents, getEvent, closeEvent }) => {
         events={state.events}
         eventPropGetter={event => ({
           style: {
-            backgroundColor: state.colors[event.color - 1].background,
+            backgroundColor: event.color ? state.colors[event.color - 1].background : state.colors[0].background,
           },
         })}
         onSelectEvent={openEditDialog}

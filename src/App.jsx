@@ -6,6 +6,7 @@ import Header from './components/blocks/Header'
 import MainPage from './components/pages/MainPage'
 import Login from './components/pages/LogIn'
 import Spinner from './components/blocks/Spinner'
+import PrivateRoute from './helpers/PrivateRoute'
 
 const App = ({ state, login, spinner, getColors }) => {
   useEffect(() => {
@@ -26,44 +27,30 @@ const App = ({ state, login, spinner, getColors }) => {
     })
   }, [])
 
-  const PrivateRoute = ({ isAuth, component: Component, path }) => (
-    <Route
-      path={path}
-      render={
-        props => (isAuth
-          ? (
-            <Component />
-          )
-          : (
-            <Redirect to={{ pathname: '/' }} />
-          ))
-      } />
-  )
-
   return (
     <BrowserRouter>
       <Header />
-      <Switch>
-        {
-          state.spinner ? (<Spinner />) : (
-            <div>
-              {
-                state.login === false ? (
-                  <div>
-                    <Route path="/" exact component={Login} />
-                    <Redirect to="/" />
-                  </div>
-                ) : (
-                  <div>
-                    <Route path="/calendar" component={MainPage} />
-                    <Redirect to="/calendar" />
-                  </div>
-                )
-              }
-            </div>
-          )
-        }
-      </Switch>
+      {
+        state.spinner ? (<Spinner />) : (
+          <Switch>
+            <Route path="/login" exact component={Login} />
+            <PrivateRoute isAuth={state.login} component={MainPage} path="/" />
+            {/* {
+              state.login === false ? (
+                <div>
+                  <Route path="/login" exact component={Login} />
+                  <Redirect to="/login" />
+                </div>
+              ) : (
+                <div>
+                  <Route path="/" component={MainPage} />
+                  <Redirect to="/" />
+                </div>
+              )
+            } */}
+          </Switch>
+        )
+      }
     </BrowserRouter>
   )
 }

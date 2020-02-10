@@ -17,7 +17,7 @@ import {
 
 import styles from './styles'
 
-const CreateEventSetRepeatFormat = ({ 
+const CreateEventSetRepeatFormatData = ({
   interval,
   setInterval,
   repeatFormat,
@@ -77,9 +77,19 @@ const CreateEventSetRepeatFormat = ({
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }} />
-        </MuiPickersUtilsProvider>
+      </MuiPickersUtilsProvider>
     </div>
   )
 }
 
-export default CreateEventSetRepeatFormat
+CreateEventSetRepeatFormatData.propTypes = {
+  interval: PropTypes.number,
+  setInterval: PropTypes.func,
+  repeatFormat: PropTypes.string,
+  daysForRepeat: PropTypes.array,
+  setDaysForRepeat: PropTypes.func,
+  weekDays: PropTypes.array,
+  setEndAfterDate: PropTypes.func,
+}
+
+export default CreateEventSetRepeatFormatData

@@ -2,12 +2,13 @@ import React from 'react'
 import { css } from 'aphrodite'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
+import PropTypes from 'prop-types'
 
 import styles from './styles'
 
 const CreateEventSetRepeatFormat = ({ repeatFormat, setRepeateFormat, state }) => {
   return (
-   <Select
+    <Select
       className={css(styles.select)}
       value={repeatFormat}
       onChange={event => {
@@ -23,6 +24,12 @@ const CreateEventSetRepeatFormat = ({ repeatFormat, setRepeateFormat, state }) =
       }
     </Select>
   )
+}
+
+CreateEventSetRepeatFormat.propTypes = {
+  state: PropTypes.object,
+  setRepeateFormat: PropTypes.func,
+  repeatFormat: PropTypes.string,
 }
 
 export default CreateEventSetRepeatFormat

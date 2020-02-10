@@ -1,16 +1,13 @@
 import React from 'react'
 import { css } from 'aphrodite'
-import PropTypes from 'prop-types'
 import DateFnsUtils from '@date-io/date-fns'
-import {
-  MuiPickersUtilsProvider,
-  KeyboardDateTimePicker,
-} from '@material-ui/pickers'
 import Grid from '@material-ui/core/Grid'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
+import { KeyboardDateTimePicker } from 'formik-material-ui-pickers'
 
 import styles from './styles'
 
-const CreateEventDates = ({ startDate, setStartDate, endDate, setEndDate }) => {
+const EditEventModalSetDates = () => {
   return (
     <MuiPickersUtilsProvider
       utils={DateFnsUtils}
@@ -23,8 +20,7 @@ const CreateEventDates = ({ startDate, setStartDate, endDate, setEndDate }) => {
           format="yyyy/MM/dd hh:mm a"
           margin="normal"
           label="Start date"
-          value={startDate}
-          onChange={setStartDate}
+          name="startDate"
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }} />
@@ -34,8 +30,7 @@ const CreateEventDates = ({ startDate, setStartDate, endDate, setEndDate }) => {
           format="yyyy/MM/dd hh:mm a"
           margin="normal"
           label="End date"
-          value={endDate}
-          onChange={setEndDate}
+          name="endDate"
           className={css(styles.endDataInput)}
           KeyboardButtonProps={{
             'aria-label': 'change date',
@@ -45,11 +40,4 @@ const CreateEventDates = ({ startDate, setStartDate, endDate, setEndDate }) => {
   )
 }
 
-CreateEventDates.propTypes = {
-  startDate: PropTypes.date,
-  setStartDate: PropTypes.func,
-  endDate: PropTypes.date,
-  setEndDate: PropTypes.func,
-}
-
-export default CreateEventDates
+export default EditEventModalSetDates

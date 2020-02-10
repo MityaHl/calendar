@@ -3,7 +3,6 @@ import { getEvents } from '@/store/actions/events'
 import { ON_CHANGE_EVENTS } from '@/constants'
 
 const loadEvents = data => {
-  console.log(data)
   return window.gapi.client.calendar.events
     .patch({
       calendarId: 'primary',
@@ -15,7 +14,7 @@ const loadEvents = data => {
 function * putData (action) {
   try {
     yield call(loadEvents, action.payload)
-    yield put(getEvents())
+    yield put(getEvents)
   } catch (error) {
     console.log(error)
   }

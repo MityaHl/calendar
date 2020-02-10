@@ -11,7 +11,7 @@ function * putData () {
   try {
     const user = yield call(loadEvents)
     yield put(login(user))
-    yield put(getEvents())
+    yield put(getEvents)
   } catch (error) {
     console.log(error)
   }

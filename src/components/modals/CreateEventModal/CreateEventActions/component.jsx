@@ -1,6 +1,7 @@
 import React from 'react'
 import DialogActions from '@material-ui/core/DialogActions'
 import Button from '@material-ui/core/Button'
+import PropTypes from 'prop-types'
 
 const CreateEventButtons = ({ handleClose, addEvent }) => {
   return (
@@ -13,6 +14,11 @@ const CreateEventButtons = ({ handleClose, addEvent }) => {
       </Button>
     </DialogActions>
   )
+}
+
+CreateEventButtons.propTypes = {
+  addEvent: PropTypes.func,
+  handleClose: PropTypes.func,
 }
 
 export default CreateEventButtons

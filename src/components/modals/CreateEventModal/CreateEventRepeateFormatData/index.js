@@ -1,3 +1,3 @@
-import CreateEventSetRepeatFormat from './component'
+import CreateEventSetRepeatFormatData from './component'
 
-export default CreateEventSetRepeatFormat
+export default CreateEventSetRepeatFormatData
