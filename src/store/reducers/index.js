@@ -6,6 +6,7 @@ import colors from './colors'
 import weekDays from './weekDays'
 import repeatFormat from './repeatFormat'
 import eventsForChange from './eventsForChange'
+import changeAbility from './changeAbility'
 
 export default combineReducers({
   login,
@@ -15,4 +16,5 @@ export default combineReducers({
   repeatFormat,
   weekDays,
   eventsForChange,
+  changeAbility,
 })

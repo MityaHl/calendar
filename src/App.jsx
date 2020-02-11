@@ -20,7 +20,8 @@ const App = ({ state, login, spinner, getColors }) => {
         })
         .then(() => {
           spinner()
-          const isAuthUser = window.gapi.auth2.getAuthInstance().isSignedIn.get()
+          const isAuthUser = window.gapi.auth2.getAuthInstance().currentUser.get().w3.U3
+          console.log(isAuthUser)
           login(isAuthUser)
           getColors()
         })
@@ -35,19 +36,6 @@ const App = ({ state, login, spinner, getColors }) => {
           <Switch>
             <Route path="/login" exact component={Login} />
             <PrivateRoute isAuth={state.login} component={MainPage} path="/" />
-            {/* {
-              state.login === false ? (
-                <div>
-                  <Route path="/login" exact component={Login} />
-                  <Redirect to="/login" />
-                </div>
-              ) : (
-                <div>
-                  <Route path="/" component={MainPage} />
-                  <Redirect to="/" />
-                </div>
-              )
-            } */}
           </Switch>
         )
       }

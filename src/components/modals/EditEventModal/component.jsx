@@ -19,41 +19,40 @@ import styles from './styles'
 const moment = require('moment')
 
 const EditEventModal = ({ state, isOpen, closeEditDialog, onChangeEvent, onDeleteEvent }) => {
-  const editEvent = (
-    id,
-    title,
-    startDate,
-    endDate,
-    color,
-    repeatFormat,
-    interval,
-    endAfterDate,
-    daysForRepeat
-  ) => {
-    console.log(endAfterDate)
-    const weekly = 'RRULE:FREQ=WEEKLY;BYDAY=' + daysForRepeat.join(',') + ';INTERVAL=' + interval +
-     ';UNTIL=' + endAfterDate.toISOString().replace(/[.]/g, '').replace(/[-]/g, '').replace(/[:]/g, '').slice(0, 8) + 'T220000Z'
-    const daily = 'RRULE:FREQ=DAILY;INTERVAL=' + interval + ';UNTIL=' +
-    endAfterDate.toISOString().replace(/[.]/g, '').replace(/[-]/g, '').replace(/[:]/g, '').slice(0, 8) + 'T220000Z'
+  const editEvent = values => {
     let recurrenceData = ''
+    console.log(values.endAfterDate)
+    if (state.eventsForChange.creator === state.login) {
+      const weekly = 'RRULE:FREQ=WEEKLY;BYDAY=' + values.daysForRepeat.join(',') +
+      ';INTERVAL=' + values.interval + ';UNTIL=' +
+      values.endAfterDate.toISOString().replace(/[\\.|\-|\\:]/g, '').slice(0, 8) + 'T160000Z'
+      const daily = 'RRULE:FREQ=DAILY;INTERVAL=' + values.interval + ';UNTIL=' +
+      values.endAfterDate.toISOString().replace(/[\\.|\-|\\:]/g, '').slice(0, 8) + 'T160000Z'
 
-    switch (repeatFormat) {
-      case 'DAILY': recurrenceData = daily
-        break
-      case 'WEEKLY': recurrenceData = weekly
-        break
+      switch (values.repeatFormat) {
+        case 'DAILY': recurrenceData = daily
+          break
+        case 'WEEKLY': recurrenceData = weekly
+          break
+      }
     }
 
     const newEvent = {
-      id: id,
-      summary: title,
+      id: values.id,
+      summary: values.title,
       end: {
-        dateTime: moment(endDate).format(),
+        //dateTime: moment(values.endDate).format(),
+        dateTime: new Date(values.endDate).toISOString(),
+        timeZone: 'America/Los_Angeles',
+
       },
       start: {
-        dateTime: moment(startDate).format(),
+        //dateTime: moment(values.startDate).format(),
+        dateTime: new Date(values.startDate).toISOString(),
+        timeZone: 'America/Los_Angeles',
+
       },
-      colorId: color + 1,
+      colorId: values.color + 1,
       recurrence: [
         recurrenceData,
       ],
@@ -67,14 +66,19 @@ const EditEventModal = ({ state, isOpen, closeEditDialog, onChangeEvent, onDelet
     closeEditDialog()
   }
 
-  let endAfterDate = state.eventsForChange.recurrence[1]
   let daysForRepeat = []
+  let endAfterDate = ''
   if (state.eventsForChange.recurrence[3]) {
     daysForRepeat = state.eventsForChange.recurrence[3].split(',')
   }
-  endAfterDate = endAfterDate.slice(0, 4) + '/' +
-  endAfterDate.slice(4, 6) + '/' + endAfterDate.slice(6, 8)
-  endAfterDate = new Date(endAfterDate)
+  if (state.eventsForChange.creator === state.login &&
+    state.eventsForChange.recurrence[0] !== '') {
+    endAfterDate = state.eventsForChange.recurrence[1]
+    endAfterDate = endAfterDate.slice(0, 4) + '/' +
+    endAfterDate.slice(4, 6) + '/' + endAfterDate.slice(6, 8)
+    endAfterDate = new Date(endAfterDate)
+  }
+
   return (
     <Grid
       container
@@ -112,10 +116,10 @@ const EditEventModal = ({ state, isOpen, closeEditDialog, onChangeEvent, onDelet
               startDate: state.eventsForChange.start,
               endDate: state.eventsForChange.end,
               color: state.eventsForChange.color - 1 || 0,
-              repeatFormat: state.eventsForChange.recurrence[0],
-              interval: state.eventsForChange.recurrence[2],
-              endAfterDate: endAfterDate,
-              daysForRepeat: daysForRepeat,
+              repeatFormat: state.eventsForChange.recurrence[0] || 'DAILY',
+              interval: state.eventsForChange.recurrence[2] || 1,
+              endAfterDate: endAfterDate || new Date(),
+              daysForRepeat: daysForRepeat || [],
             }}
           >
             {({
@@ -129,11 +133,15 @@ const EditEventModal = ({ state, isOpen, closeEditDialog, onChangeEvent, onDelet
                   fullWidth />
                 <EditEventModalSetDates />
                 <EditEventSetColor colors={state.colors} />
-                <EditEventRepeateFormatData
-                  weekDays={state.weekDays}
-                  daysForRepeat={values.daysForRepeat}
-                  repeatTypes={state.repeatFormat}
-                  repeatFormat={values.repeatFormat} />
+                {
+                  state.eventsForChange.creator === state.login && (
+                    <EditEventRepeateFormatData
+                      weekDays={state.weekDays}
+                      daysForRepeat={values.daysForRepeat}
+                      repeatTypes={state.repeatFormat}
+                      repeatFormat={values.repeatFormat} />
+                  )
+                }
                 <Grid
                   container
                   direction="row"
@@ -169,17 +177,7 @@ const EditEventModal = ({ state, isOpen, closeEditDialog, onChangeEvent, onDelet
                     <Button
                       color="primary"
                       onClick={() => {
-                        editEvent(
-                          values.id,
-                          values.title,
-                          values.startDate,
-                          values.endDate,
-                          values.color,
-                          values.repeatFormat,
-                          values.interval,
-                          values.endAfterDate,
-                          values.daysForRepeat
-                        )
+                        editEvent(values)
                       }}
                     >
                       Edit

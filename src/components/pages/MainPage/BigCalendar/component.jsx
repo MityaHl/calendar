@@ -6,12 +6,13 @@ import moment from 'moment'
 
 import EditEventModal from '@/components/modals/EditEventModal'
 import CreateFastEventModal from '@/components/modals/CreateFastEventModal'
+import ChangeBlockedModal from '@/components/modals/ChangeBlocked'
 
 import styles from './styles'
 
 const localizer = momentLocalizer(moment)
 
-const MyCalendar = ({ state, getEvents, getEvent, closeEvent }) => {
+const MyCalendar = ({ state, getEvents, getEvent, closeEvent, changeTrue }) => {
   const [dateForFastCreate, setDateForFastCreate] = useState()
 
   useEffect(() => {
@@ -19,7 +20,11 @@ const MyCalendar = ({ state, getEvents, getEvent, closeEvent }) => {
   }, [])
 
   const openEditDialog = event => {
-    getEvent(event.recurringEventId)
+    event.accessRole === 'owner' ? (
+      getEvent({ recId: event.recurringEventId, id: event.key })
+    ) : (
+      changeTrue()
+    )
   }
 
   const closeEditDialog = () => {
@@ -49,6 +54,8 @@ const MyCalendar = ({ state, getEvents, getEvent, closeEvent }) => {
         onSelectEvent={openEditDialog}
         onDrillDown={openFastCreateOpen}
         endAccessor="end" />
+      <ChangeBlockedModal
+        open={state.changeAbility} />
       <EditEventModal
         isOpen={!!state.eventsForChange.key}
         closeEditDialog={closeEditDialog} />
@@ -65,6 +72,7 @@ MyCalendar.propTypes = {
   getEvents: PropTypes.func,
   getEvent: PropTypes.func,
   closeEvent: PropTypes.func,
+  changeTrue: PropTypes.func,
 }
 
 export default MyCalendar

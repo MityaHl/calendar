@@ -1,31 +1,42 @@
 export const getEventsMapper = response => {
-  return response.result.items.map((item, index) => (
-    {
-      key: item.id,
-      title: item.summary,
-      start: new Date(item.start.dateTime),
-      end: new Date(item.end.dateTime),
-      color: item.colorId,
-      recurringEventId: item.recurringEventId,
-    }
-  ))
+  return response.reduce((events, resp) => {
+    return events.concat(resp.result.items.map((item, index) => (
+      {
+        key: item.id,
+        title: item.summary,
+        start: new Date(item.start.date || item.start.dateTime),
+        end: new Date(item.end.date || item.end.dateTime),
+        color: item.colorId || 1,
+        recurringEventId: item.recurringEventId,
+        creator: item.creator.email,
+        accessRole: resp.result.accessRole,
+      }
+    )))
+  }, [])
 }
 
 export const getOneEventMapper = response => {
   return {
     key: response.result.id,
     title: response.result.summary,
-    start: new Date(response.result.start.dateTime),
-    end: new Date(response.result.end.dateTime),
+    start: new Date(response.result.start.dateTime || response.result.start.date),
+    end: new Date(response.result.end.dateTime || response.result.end.date),
     color: response.result.colorId,
-    recurrence: response.result.recurrence[0].slice(6).split(';').map((item, index) => {
-      return item.slice(item.indexOf('=') + 1)
-    }),
+    creator: response.result.creator.email,
+    recurrence: response.result.recurrence ? (
+      response.result.recurrence[0].slice(6).split(';').map((item, index) => {
+        return item.slice(item.indexOf('=') + 1)
+      })
+    ) : (
+      [
+        '',
+      ]
+    ),
   }
 }
 
 export const eventForFastCreate = event => {
-  const afterData = event.date.toISOString().replace(/[.]/g, '').replace(/[-]/g, '').replace(/[:]/g, '').slice(0, 8)
+  const afterData = event.date.toISOString().replace(/[\\.|\-|\\:]/g, '').slice(0, 8)
   const daily = 'RRULE:FREQ=DAILY;INTERVAL=1;UNTIL=' + afterData + 'T220000Z'
 
   return {
@@ -46,7 +57,7 @@ export const eventForFastCreate = event => {
 }
 
 export const eventForCreate = event => {
-  const afterData = event.endAfterDate.toISOString().replace(/[.]/g, '').replace(/[-]/g, '').replace(/[:]/g, '').slice(0, 8)
+  const afterData = event.endAfterDate.toISOString().replace(/[\\.|\-|\\:]/g, '').slice(0, 8)
 
   const weekly = 'RRULE:FREQ=WEEKLY;BYDAY=' + event.daysForRepeat.join(',') +
    ';INTERVAL=' + event.interval + ';UNTIL=' + afterData + 'T220000Z'

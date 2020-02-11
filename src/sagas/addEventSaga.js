@@ -14,7 +14,7 @@ const loadEvents = data => {
     daysForRepeat: data.daysForRepeat,
     repeatFormat: data.repeatFormat,
   })
-
+  console.log(event)
   return window.gapi.client.calendar.events
     .insert({
       calendarId: 'primary',
@@ -25,7 +25,7 @@ const loadEvents = data => {
 function * putData (action) {
   try {
     yield call(loadEvents, action.payload)
-    yield put(getEvents)
+    yield put(getEvents())
   } catch (error) {
     console.log(error)
   }

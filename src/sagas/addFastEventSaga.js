@@ -19,7 +19,7 @@ const loadEvents = data => {
 function * putData (action) {
   try {
     yield call(loadEvents, action.payload)
-    yield put(getEvents)
+    yield put(getEvents())
   } catch (error) {
     console.log(error)
   }
