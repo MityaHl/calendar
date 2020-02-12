@@ -48,7 +48,9 @@ const MyCalendar = ({ state, getEvents, getEvent, closeEvent, changeTrue }) => {
         events={state.events}
         eventPropGetter={event => ({
           style: {
-            backgroundColor: event.color ? state.colors[event.color - 1].background : state.colors[0].background,
+            backgroundColor: event.color
+              ? state.colors[event.color - 1].background
+              : state.colors[0].background,
           },
         })}
         onSelectEvent={openEditDialog}

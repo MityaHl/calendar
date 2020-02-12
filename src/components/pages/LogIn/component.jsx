@@ -36,6 +36,10 @@ const Login = ({ onLogIn, login }) => {
   )
 }
 
+Login.defaultTypes = {
+  login: null,
+}
+
 Login.propTypes = {
   onLogIn: PropTypes.func,
   login: PropTypes.bool,

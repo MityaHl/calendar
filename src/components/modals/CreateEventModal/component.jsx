@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { css } from 'aphrodite'
 import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button'
@@ -17,33 +17,35 @@ import CreateEventSetColor from './CreateEventSetColor'
 import CreateEventSetRepeatFormat from './CreateEventSetRepeatFormat'
 import CreateEventRepeateFormatData from './CreateEventRepeateFormatData'
 
+import * as constants from '@/constants/createEventConstants'
+
 import styles from './styles'
 
 const CreateEventModal = ({ state, onAddEvent }) => {
-  const [open, setOpen] = React.useState(false)
-  const [title, setTitle] = React.useState('')
-  const [startDate, setStartDate] = React.useState(new Date())
-  const [endDate, setEndDate] = React.useState(new Date())
-  const [color, setColor] = React.useState(1)
-  const [repeatFormat, setRepeateFormat] = React.useState('DAILY')
-  const [daysForRepeat, setDaysForRepeat] = React.useState([])
-  const [interval, setInterval] = React.useState(1)
-  const [endAfterDate, setEndAfterDate] = React.useState(new Date())
+  const [open, setOpen] = useState(constants.defaultOpen)
+  const [title, setTitle] = useState(constants.defaultTitle)
+  const [startDate, setStartDate] = useState(constants.defaultStartDate)
+  const [endDate, setEndDate] = useState(constants.defaultEndDate)
+  const [color, setColor] = useState(constants.defaultColor)
+  const [repeatFormat, setRepeateFormat] = useState(constants.defaultRepeateFormat)
+  const [daysForRepeat, setDaysForRepeat] = useState(constants.defaultDaysForRepeat)
+  const [interval, setInterval] = useState(constants.defaultInterval)
+  const [endAfterDate, setEndAfterDate] = useState(constants.defaultEndAfterDate)
 
   const handleClickOpen = () => {
     setOpen(true)
   }
 
   const handleClose = () => {
-    setTitle('')
-    setStartDate(new Date())
-    setEndDate(new Date())
-    setColor(1)
-    setRepeateFormat('DAILY')
-    setDaysForRepeat([])
-    setInterval(1)
-    setEndAfterDate(new Date())
-    setOpen(false)
+    setTitle(constants.defaultTitle)
+    setStartDate(constants.defaultStartDate)
+    setEndDate(constants.defaultEndDate)
+    setColor(constants.defaultColor)
+    setRepeateFormat(constants.defaultRepeateFormat)
+    setDaysForRepeat(constants.defaultDaysForRepeat)
+    setInterval(constants.defaultInterval)
+    setEndAfterDate(constants.defaultEndAfterDate)
+    setOpen(constants.defaultOpen)
   }
 
   const addEvent = () => {
@@ -59,7 +61,6 @@ const CreateEventModal = ({ state, onAddEvent }) => {
     })
     handleClose()
   }
-
   return (
     <Grid
       container

@@ -1,5 +1,6 @@
 import React from 'react'
 import { css } from 'aphrodite'
+import PropTypes from 'prop-types'
 import { Select } from 'formik-material-ui'
 import MenuItem from '@material-ui/core/MenuItem'
 
@@ -24,6 +25,10 @@ const EditEventSetColor = ({ colors }) => {
       }
     </Select>
   )
+}
+
+EditEventSetColor.propTypes = {
+  colors: PropTypes.array,
 }
 
 export default EditEventSetColor

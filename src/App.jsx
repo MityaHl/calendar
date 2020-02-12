@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
 import Header from './components/blocks/Header'
 import MainPage from './components/pages/MainPage'
@@ -21,7 +21,6 @@ const App = ({ state, login, spinner, getColors }) => {
         .then(() => {
           spinner()
           const isAuthUser = window.gapi.auth2.getAuthInstance().currentUser.get().w3.U3
-          console.log(isAuthUser)
           login(isAuthUser)
           getColors()
         })
@@ -35,7 +34,7 @@ const App = ({ state, login, spinner, getColors }) => {
         state.spinner ? (<Spinner />) : (
           <Switch>
             <Route path="/login" exact component={Login} />
-            <PrivateRoute isAuth={state.login} component={MainPage} path="/" />
+            <PrivateRoute isAuth={!!state.login} component={MainPage} path="/" />
           </Switch>
         )
       }

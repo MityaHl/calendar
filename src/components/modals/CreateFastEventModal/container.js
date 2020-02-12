@@ -4,9 +4,7 @@ import { onAddFastEvent } from '@/store/actions/events'
 
 import CreateFastEventModal from './component'
 
-const mapStateToProps = state => ({
-  state: state,
-})
+const mapStateToProps = state => ({})
 
 const mapDispatchToProps = dispatch => ({
   onAddFastEvent: data => dispatch(onAddFastEvent(data)),

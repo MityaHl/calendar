@@ -90,6 +90,7 @@ CreateEventSetRepeatFormatData.propTypes = {
   setDaysForRepeat: PropTypes.func,
   weekDays: PropTypes.array,
   setEndAfterDate: PropTypes.func,
+  endAfterDate: PropTypes.object,
 }
 
 export default CreateEventSetRepeatFormatData

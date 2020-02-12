@@ -13,7 +13,10 @@ import styles from './style'
 
 const Header = ({ login }) => {
   return (
-    <AppBar position="static" className={css(styles.header)}>
+    <AppBar
+      position="static"
+      className={css(styles.header)}
+    >
       <Toolbar className={css(styles.toolbar)}>
         <Grid container alignItems="center">
           <Grid
@@ -49,6 +52,10 @@ const Header = ({ login }) => {
       </Toolbar>
     </AppBar>
   )
+}
+
+Header.defaultTypes = {
+  login: false,
 }
 
 Header.propTypes = {

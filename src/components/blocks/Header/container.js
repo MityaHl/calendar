@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import Header from './component'
 
 const mapStateToProps = state => ({
-  login: state.login,
+  login: !!state.login,
 })
 
 const mapDispatchToProps = dispatch => ({})

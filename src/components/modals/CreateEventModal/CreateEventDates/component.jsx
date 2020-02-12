@@ -46,10 +46,15 @@ const CreateEventDates = ({ startDate, setStartDate, endDate, setEndDate }) => {
 }
 
 CreateEventDates.propTypes = {
-  startDate: PropTypes.date,
+  startDate: PropTypes.object,
   setStartDate: PropTypes.func,
-  endDate: PropTypes.date,
+  endDate: PropTypes.object,
   setEndDate: PropTypes.func,
+}
+
+CreateEventDates.defaultProps = {
+  startDate: null,
+  endDate: undefined,
 }
 
 export default CreateEventDates

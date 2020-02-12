@@ -14,7 +14,6 @@ const loadEvents = data => {
     daysForRepeat: data.daysForRepeat,
     repeatFormat: data.repeatFormat,
   })
-  console.log(event)
   return window.gapi.client.calendar.events
     .insert({
       calendarId: 'primary',

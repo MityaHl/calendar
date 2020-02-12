@@ -16,47 +16,20 @@ import EditEventSetColor from './EditEventSetColor'
 
 import styles from './styles'
 
-const moment = require('moment')
+import {
+  eventForUpdateSaga,
+  recurrenceDataForUpdate,
+  endAfterDateForUpdate,
+} from '@/helpers/mappers'
 
 const EditEventModal = ({ state, isOpen, closeEditDialog, onChangeEvent, onDeleteEvent }) => {
   const editEvent = values => {
     let recurrenceData = ''
-    console.log(values.endAfterDate)
     if (state.eventsForChange.creator === state.login) {
-      const weekly = 'RRULE:FREQ=WEEKLY;BYDAY=' + values.daysForRepeat.join(',') +
-      ';INTERVAL=' + values.interval + ';UNTIL=' +
-      values.endAfterDate.toISOString().replace(/[\\.|\-|\\:]/g, '').slice(0, 8) + 'T160000Z'
-      const daily = 'RRULE:FREQ=DAILY;INTERVAL=' + values.interval + ';UNTIL=' +
-      values.endAfterDate.toISOString().replace(/[\\.|\-|\\:]/g, '').slice(0, 8) + 'T160000Z'
-
-      switch (values.repeatFormat) {
-        case 'DAILY': recurrenceData = daily
-          break
-        case 'WEEKLY': recurrenceData = weekly
-          break
-      }
+      recurrenceData = recurrenceDataForUpdate(values)
     }
 
-    const newEvent = {
-      id: values.id,
-      summary: values.title,
-      end: {
-        //dateTime: moment(values.endDate).format(),
-        dateTime: new Date(values.endDate).toISOString(),
-        timeZone: 'America/Los_Angeles',
-
-      },
-      start: {
-        //dateTime: moment(values.startDate).format(),
-        dateTime: new Date(values.startDate).toISOString(),
-        timeZone: 'America/Los_Angeles',
-
-      },
-      colorId: values.color + 1,
-      recurrence: [
-        recurrenceData,
-      ],
-    }
+    const newEvent = eventForUpdateSaga({ values, recurrenceData })
     onChangeEvent(newEvent)
     closeEditDialog()
   }
@@ -73,10 +46,7 @@ const EditEventModal = ({ state, isOpen, closeEditDialog, onChangeEvent, onDelet
   }
   if (state.eventsForChange.creator === state.login &&
     state.eventsForChange.recurrence[0] !== '') {
-    endAfterDate = state.eventsForChange.recurrence[1]
-    endAfterDate = endAfterDate.slice(0, 4) + '/' +
-    endAfterDate.slice(4, 6) + '/' + endAfterDate.slice(6, 8)
-    endAfterDate = new Date(endAfterDate)
+    endAfterDate = endAfterDateForUpdate(state.eventsForChange.recurrence)
   }
 
   return (

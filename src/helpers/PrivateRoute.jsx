@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { Route, Redirect } from 'react-router-dom'
 
 const PrivateRoute = ({ isAuth, component: Component, path }) => {
@@ -16,6 +17,16 @@ const PrivateRoute = ({ isAuth, component: Component, path }) => {
           ))
       } />
   )
+}
+
+PrivateRoute.defaultTypes = {
+  component: null,
+}
+
+PrivateRoute.propTypes = {
+  isAuth: PropTypes.bool,
+  component: PropTypes.func,
+  path: PropTypes.string,
 }
 
 export default PrivateRoute

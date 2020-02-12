@@ -89,3 +89,73 @@ export const eventForCreate = event => {
     ],
   }
 }
+
+export const fullEventForUpdate = data => {
+  if (data.recurrence[0] === '') {
+    return {
+      id: data.id,
+      summary: data.summary,
+      end: {
+        dateTime: new Date(data.end.dateTime).toISOString(),
+        timeZone: 'America/Los_Angeles',
+      },
+      start: {
+        dateTime: new Date(data.start.dateTime).toISOString(),
+        timeZone: 'America/Los_Angeles',
+      },
+      colorId: data.colorId,
+    }
+  } else {
+    return data
+  }
+}
+
+export const eventForUpdateSaga = ({ values, recurrenceData }) => {
+  return {
+    id: values.id,
+    summary: values.title,
+    end: {
+      dateTime: new Date(values.endDate).toISOString(),
+      timeZone: 'America/Los_Angeles',
+
+    },
+    start: {
+      dateTime: new Date(values.startDate).toISOString(),
+      timeZone: 'America/Los_Angeles',
+
+    },
+    colorId: values.color + 1,
+    recurrence: [
+      recurrenceData,
+    ],
+  }
+}
+
+export const recurrenceDataForUpdate = values => {
+  let recurrenceData = ''
+  const weekly = 'RRULE:FREQ=WEEKLY;BYDAY=' + values.daysForRepeat.join(',') +
+    ';INTERVAL=' + values.interval + ';UNTIL=' +
+    values.endAfterDate.toISOString().replace(/[\\.|\-|\\:]/g, '').slice(0, 8) + 'T160000Z'
+  const daily = 'RRULE:FREQ=DAILY;INTERVAL=' + values.interval + ';UNTIL=' +
+    values.endAfterDate.toISOString().replace(/[\\.|\-|\\:]/g, '').slice(0, 8) + 'T160000Z'
+
+  switch (values.repeatFormat) {
+    case 'DAILY': recurrenceData = daily
+      break
+    case 'WEEKLY': recurrenceData = weekly
+      break
+    default: recurrenceData = daily
+      break
+  }
+
+  return recurrenceData
+}
+
+export const endAfterDateForUpdate = recurrence => {
+  let [, endAfterDate] = recurrence
+  endAfterDate = endAfterDate.slice(0, 4) + '/' +
+  endAfterDate.slice(4, 6) + '/' + endAfterDate.slice(6, 8)
+  endAfterDate = new Date(endAfterDate)
+
+  return endAfterDate
+}

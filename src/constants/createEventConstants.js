@@ -1,0 +1,9 @@
+export const defaultTitle = ''
+export const defaultStartDate = new Date()
+export const defaultEndDate = new Date()
+export const defaultColor = 1
+export const defaultRepeateFormat = 'DAILY'
+export const defaultDaysForRepeat = []
+export const defaultInterval = 1
+export const defaultEndAfterDate = new Date()
+export const defaultOpen = false

@@ -5,7 +5,7 @@ import { onLogin } from '@/store/actions/login'
 import LogIn from './component'
 
 const mapStateToProps = state => ({
-  login: state.login,
+  login: !!state.login,
 })
 
 const mapDispatchToProps = dispatch => ({

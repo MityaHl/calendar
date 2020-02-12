@@ -1,5 +1,6 @@
 import React from 'react'
 import { css } from 'aphrodite'
+import PropTypes from 'prop-types'
 import FormControl from '@material-ui/core/FormControl'
 import Input from '@material-ui/core/Input'
 import { TextField, Select } from 'formik-material-ui'
@@ -72,6 +73,13 @@ const EditEventRepeateFormatData = ({ weekDays, daysForRepeat, repeatTypes, repe
       </MuiPickersUtilsProvider>
     </div>
   )
+}
+
+EditEventRepeateFormatData.propTypes = {
+  weekDays: PropTypes.array,
+  daysForRepeat: PropTypes.array,
+  repeatTypes: PropTypes.array,
+  repeatFormat: PropTypes.string,
 }
 
 export default EditEventRepeateFormatData
