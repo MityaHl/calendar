@@ -37,7 +37,7 @@ const Header = ({ login }) => {
             justify="center"
             alignItems="center"
           >
-            {login && <CreateEventModal />}
+            {!!login && <CreateEventModal />}
           </Grid>
           <Grid
             item
@@ -46,7 +46,7 @@ const Header = ({ login }) => {
             direction="row"
             justify="center"
           >
-            {login && <LogOutButton />}
+            {!!login && <LogOutButton />}
           </Grid>
         </Grid>
       </Toolbar>
@@ -59,7 +59,7 @@ Header.defaultTypes = {
 }
 
 Header.propTypes = {
-  login: PropTypes.bool,
+  login: PropTypes.string,
 }
 
 export default Header

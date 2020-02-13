@@ -42,7 +42,7 @@ Login.defaultTypes = {
 
 Login.propTypes = {
   onLogIn: PropTypes.func,
-  login: PropTypes.bool,
+  login: PropTypes.string,
 }
 
 export default Login

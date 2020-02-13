@@ -23,10 +23,20 @@ import {
 } from '@/helpers/mappers'
 import { DAILY } from '@/constants'
 
-const EditEventModal = ({ state, isOpen, closeEditDialog, onChangeEvent, onDeleteEvent }) => {
+const EditEventModal = ({
+  eventsForChange,
+  login,
+  colors,
+  weekDays,
+  repeatTypes,
+  isOpen,
+  closeEditDialog,
+  onChangeEvent,
+  onDeleteEvent,
+}) => {
   const editEvent = values => {
     let recurrenceData = ''
-    if (state.eventsForChange.creator === state.login) {
+    if (eventsForChange.creator === login) {
       recurrenceData = recurrenceDataForUpdate(values)
     }
 
@@ -36,18 +46,18 @@ const EditEventModal = ({ state, isOpen, closeEditDialog, onChangeEvent, onDelet
   }
 
   const deleteEvent = () => {
-    onDeleteEvent(state.eventsForChange.key)
+    onDeleteEvent(eventsForChange.key)
     closeEditDialog()
   }
 
   let daysForRepeat = []
   let endAfterDate = ''
-  if (state.eventsForChange.recurrence[3]) {
-    daysForRepeat = state.eventsForChange.recurrence[3].split(',')
+  if (eventsForChange.recurrence[3]) {
+    daysForRepeat = eventsForChange.recurrence[3].split(',')
   }
-  if (state.eventsForChange.creator === state.login &&
-    state.eventsForChange.recurrence[0] !== '') {
-    endAfterDate = endAfterDateForUpdate(state.eventsForChange.recurrence)
+  if (eventsForChange.creator === login &&
+    eventsForChange.recurrence[0] !== '') {
+    endAfterDate = endAfterDateForUpdate(eventsForChange.recurrence)
   }
 
   return (
@@ -82,13 +92,13 @@ const EditEventModal = ({ state, isOpen, closeEditDialog, onChangeEvent, onDelet
         <DialogContent>
           <Formik
             initialValues={{
-              id: state.eventsForChange.key,
-              title: state.eventsForChange.title,
-              startDate: state.eventsForChange.start,
-              endDate: state.eventsForChange.end,
-              color: state.eventsForChange.color - 1 || 0,
-              repeatFormat: state.eventsForChange.recurrence[0] || DAILY,
-              interval: state.eventsForChange.recurrence[2] || 1,
+              id: eventsForChange.key,
+              title: eventsForChange.title,
+              startDate: eventsForChange.start,
+              endDate: eventsForChange.end,
+              color: eventsForChange.color - 1 || 0,
+              repeatFormat: eventsForChange.recurrence[0] || DAILY,
+              interval: eventsForChange.recurrence[2] || 1,
               endAfterDate: endAfterDate || new Date(),
               daysForRepeat: daysForRepeat || [],
             }}
@@ -103,13 +113,13 @@ const EditEventModal = ({ state, isOpen, closeEditDialog, onChangeEvent, onDelet
                   name="title"
                   fullWidth />
                 <EditEventModalSetDates />
-                <EditEventSetColor colors={state.colors} />
+                <EditEventSetColor colors={colors} />
                 {
-                  state.eventsForChange.creator === state.login && (
+                  eventsForChange.creator === login && (
                     <EditEventRepeateFormatData
-                      weekDays={state.weekDays}
+                      weekDays={weekDays}
                       daysForRepeat={values.daysForRepeat}
-                      repeatTypes={state.repeatFormat}
+                      repeatTypes={repeatTypes}
                       repeatFormat={values.repeatFormat} />
                   )
                 }
@@ -165,7 +175,11 @@ const EditEventModal = ({ state, isOpen, closeEditDialog, onChangeEvent, onDelet
 }
 
 EditEventModal.propTypes = {
-  state: PropTypes.object,
+  eventsForChange: PropTypes.object,
+  login: PropTypes.string,
+  colors: PropTypes.array,
+  weekDays: PropTypes.array,
+  repeatTypes: PropTypes.array,
   isOpen: PropTypes.bool,
   closeEditDialog: PropTypes.func,
   onChangeEvent: PropTypes.func,

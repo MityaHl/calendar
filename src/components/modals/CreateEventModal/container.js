@@ -1,11 +1,13 @@
 import { connect } from 'react-redux'
 
 import { onAddEvent } from '@/store/actions/events'
+import { getEventColors, getAllWeekDays } from '@/store/selectors/selectors'
 
 import CreateEventModal from './component'
 
 const mapStateToProps = state => ({
-  state: state,
+  colors: getEventColors(state),
+  weekDays: getAllWeekDays(state),
 })
 
 const mapDispatchToProps = dispatch => ({

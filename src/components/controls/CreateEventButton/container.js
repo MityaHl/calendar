@@ -4,9 +4,7 @@ import { onAddEvent } from '@/store/actions/events'
 
 import CreateEventButton from './component'
 
-const mapStateToProps = state => ({
-  state: state,
-})
+const mapStateToProps = state => ({})
 
 const mapDispatchToProps = dispatch => ({
   onAddEvent: () => dispatch(onAddEvent()),

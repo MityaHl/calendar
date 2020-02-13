@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 
 import styles from './styles'
 
-const CreateEventSetRepeatFormat = ({ repeatFormat, setRepeateFormat, state }) => {
+const CreateEventSetRepeatFormat = ({ repeatFormat, setRepeateFormat, repeatTypes }) => {
   const setEventRepeatFormat = useCallback(event => {
     setRepeateFormat(event.target.value)
   })
@@ -18,7 +18,7 @@ const CreateEventSetRepeatFormat = ({ repeatFormat, setRepeateFormat, state }) =
       onChange={setEventRepeatFormat}
     >
       {
-        state.repeatFormat.map((format, index) => (
+        repeatTypes.map((format, index) => (
           <MenuItem key={index} value={format}>
             {format}
           </MenuItem>
@@ -29,7 +29,7 @@ const CreateEventSetRepeatFormat = ({ repeatFormat, setRepeateFormat, state }) =
 }
 
 CreateEventSetRepeatFormat.propTypes = {
-  state: PropTypes.object,
+  repeatTypes: PropTypes.array,
   setRepeateFormat: PropTypes.func,
   repeatFormat: PropTypes.string,
 }

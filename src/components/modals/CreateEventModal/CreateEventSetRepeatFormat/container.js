@@ -1,9 +1,10 @@
 import { connect } from 'react-redux'
 
 import CreateEventSetRepeatFormat from './component'
+import { getRepeatTypes } from '@/store/selectors/selectors'
 
 const mapStateToProps = state => ({
-  state: state,
+  repeatTypes: getRepeatTypes(state),
 })
 
 const mapDispatchToProps = dispatch => ({})

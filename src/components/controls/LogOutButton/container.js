@@ -4,9 +4,7 @@ import { onLogout } from '@/store/actions/logout'
 
 import LogOut from './component'
 
-const mapStateToProps = state => ({
-  state: state,
-})
+const mapStateToProps = state => ({})
 
 const mapDispatchToProps = dispatch => ({
   onLogOut: () => dispatch(onLogout()),

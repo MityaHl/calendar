@@ -21,7 +21,7 @@ import * as constants from '@/constants/createEventConstants'
 
 import styles from './styles'
 
-const CreateEventModal = ({ state, onAddEvent }) => {
+const CreateEventModal = ({ colors, weekDays, onAddEvent }) => {
   const [open, setOpen] = useState(constants.defaultOpen)
   const [title, setTitle] = useState(constants.defaultTitle)
   const [startDate, setStartDate] = useState(constants.defaultStartDate)
@@ -119,7 +119,7 @@ const CreateEventModal = ({ state, onAddEvent }) => {
             Color
           </InputLabel>
           <CreateEventSetColor
-            colors={state.colors}
+            colors={colors}
             setColor={setColor} />
           <CreateEventSetRepeatFormat
             repeatFormat={repeatFormat}
@@ -130,7 +130,7 @@ const CreateEventModal = ({ state, onAddEvent }) => {
             repeatFormat={repeatFormat}
             daysForRepeat={daysForRepeat}
             setDaysForRepeat={setDaysForRepeat}
-            weekDays={state.weekDays}
+            weekDays={weekDays}
             endAfterDate={endAfterDate}
             setEndAfterDate={setEndAfterDate} />
         </DialogContent>
@@ -143,7 +143,8 @@ const CreateEventModal = ({ state, onAddEvent }) => {
 }
 
 CreateEventModal.propTypes = {
-  state: PropTypes.object,
+  colors: PropTypes.array,
+  weekDays: PropTypes.array,
   onAddEvent: PropTypes.func,
 }
 

@@ -12,7 +12,16 @@ import styles from './styles'
 
 const localizer = momentLocalizer(moment)
 
-const MyCalendar = ({ state, getEvents, getEvent, closeEvent, changeTrue }) => {
+const MyCalendar = ({
+  colors,
+  events,
+  changeAbility,
+  eventForChange,
+  getEvents,
+  getEvent,
+  closeEvent,
+  changeTrue,
+}) => {
   const [dateForFastCreate, setDateForFastCreate] = useState()
 
   useEffect(() => {
@@ -45,21 +54,21 @@ const MyCalendar = ({ state, getEvents, getEvent, closeEvent, changeTrue }) => {
         className={css(styles.calendar)}
         localizer={localizer}
         startAccessor="start"
-        events={state.events}
+        events={events}
         eventPropGetter={event => ({
           style: {
             backgroundColor: event.color
-              ? state.colors[event.color - 1].background
-              : state.colors[0].background,
+              ? colors[event.color - 1].background
+              : colors[0].background,
           },
         })}
         onSelectEvent={openEditDialog}
         onDrillDown={openFastCreateOpen}
         endAccessor="end" />
       <ChangeBlockedModal
-        open={state.changeAbility} />
+        open={changeAbility} />
       <EditEventModal
-        isOpen={!!state.eventsForChange.key}
+        isOpen={!!eventForChange.key}
         closeEditDialog={closeEditDialog} />
       <CreateFastEventModal
         open={!!dateForFastCreate}
@@ -70,7 +79,10 @@ const MyCalendar = ({ state, getEvents, getEvent, closeEvent, changeTrue }) => {
 }
 
 MyCalendar.propTypes = {
-  state: PropTypes.object,
+  eventForChange: PropTypes.object,
+  changeAbility: PropTypes.bool,
+  events: PropTypes.array,
+  colors: PropTypes.array,
   getEvents: PropTypes.func,
   getEvent: PropTypes.func,
   closeEvent: PropTypes.func,

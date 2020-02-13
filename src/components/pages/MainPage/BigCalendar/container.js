@@ -2,11 +2,20 @@ import { connect } from 'react-redux'
 
 import { getEvents, getEvent, closeEvent } from '@/store/actions/events'
 import { changeTrue } from '@/store/actions/changeAbility'
+import {
+  getEventColors,
+  getAllEvents,
+  getChangeAbility,
+  getEventForChange,
+} from '@/store/selectors/selectors'
 
 import BigCalendar from './component'
 
 const mapStateToProps = state => ({
-  state: state,
+  colors: getEventColors(state),
+  events: getAllEvents(state),
+  changeAbility: getChangeAbility(state),
+  eventForChange: getEventForChange(state),
 })
 
 const mapDispatchToProps = dispatch => ({

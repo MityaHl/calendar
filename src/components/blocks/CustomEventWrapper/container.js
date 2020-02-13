@@ -1,9 +1,10 @@
 import { connect } from 'react-redux'
 
 import CustomEventWrapper from './component'
+import { getEventColors } from '@/store/selectors/selectors'
 
 const mapStateToProps = state => ({
-  colors: state.colors,
+  colors: getEventColors(state),
 })
 
 const mapDispatchToProps = dispatch => ({})
