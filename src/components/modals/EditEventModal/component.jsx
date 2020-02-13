@@ -52,6 +52,7 @@ const EditEventModal = ({
 
   let daysForRepeat = []
   let endAfterDate = ''
+
   if (eventsForChange.recurrence[3]) {
     daysForRepeat = eventsForChange.recurrence[3].split(',')
   }

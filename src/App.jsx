@@ -8,7 +8,7 @@ import Login from './components/pages/LogIn'
 import Spinner from './components/blocks/Spinner'
 import PrivateRoute from './helpers/PrivateRoute'
 
-const App = ({ state, login, spinner, getColors }) => {
+const App = ({ login, onLoad, spinner, getColors, closeSpinner, loginData }) => {
   useEffect(() => {
     window.gapi.load('client:auth2', () => {
       window.gapi.client
@@ -19,7 +19,7 @@ const App = ({ state, login, spinner, getColors }) => {
           scope: 'https://www.googleapis.com/auth/calendar',
         })
         .then(() => {
-          spinner()
+          closeSpinner()
           const isAuthUser = window.gapi.auth2.getAuthInstance().currentUser.get().w3.U3
           login(isAuthUser)
           getColors()
@@ -27,16 +27,20 @@ const App = ({ state, login, spinner, getColors }) => {
     })
   }, [])
 
+  // useEffect(() => {
+  //   onLoad()
+  // }, [])
+
   return (
     <BrowserRouter>
       <Header />
       {
-        state.spinner
+        spinner
           ? (<Spinner />)
           : (
             <Switch>
               <Route path="/login" exact component={Login} />
-              <PrivateRoute isAuth={!!state.login} component={MainPage} path="/" />
+              <PrivateRoute isAuth={!!loginData} component={MainPage} path="/" />
             </Switch>
           )
       }
@@ -45,10 +49,12 @@ const App = ({ state, login, spinner, getColors }) => {
 }
 
 App.propTypes = {
-  state: PropTypes.object,
+  loginData: PropTypes.string,
+  spinner: PropTypes.bool,
+  onLoad: PropTypes.func,
   login: PropTypes.func,
-  spinner: PropTypes.func,
   getColors: PropTypes.func,
+  closeSpinner: PropTypes.func,
 }
 
 export default App

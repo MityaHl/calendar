@@ -9,6 +9,7 @@ import { watchFastAdd } from './addFastEventSaga'
 import { watchOneEvent } from './getOneEventSaga'
 import { watchLogin } from './logInSaga'
 import { watchLoout } from './logOutSaga'
+import { watchInit } from './gapiInitSaga'
 
 export default function * rootSaga () {
   yield all([
@@ -21,5 +22,6 @@ export default function * rootSaga () {
     watchOneEvent(),
     watchLogin(),
     watchLoout(),
+    watchInit(),
   ])
 }

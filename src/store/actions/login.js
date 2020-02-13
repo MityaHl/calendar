@@ -1,4 +1,8 @@
-import { LOGIN, ON_LOGIN, CHECK_LOGIN } from '@/constants'
+import { LOGIN, ON_LOGIN, ON_LOAD, CHECK_LOGIN } from '@/constants'
+
+export const onLoad = () => ({
+  type: ON_LOAD,
+})
 
 export const login = data => ({
   type: LOGIN,

@@ -7,6 +7,14 @@ const getEvents = state => state.events
 const getAbility = state => state.changeAbility
 const getEventsForChange = state => state.eventsForChange
 const getWeekDays = state => state.eventsForChange
+const getSpinnerFromState = state => state.spinner
+
+export const getSpinner = createSelector(
+  [getSpinnerFromState],
+  spinner => {
+    return spinner
+  }
+)
 
 export const getAllWeekDays = createSelector(
   [getWeekDays],
