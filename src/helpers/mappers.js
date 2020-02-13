@@ -1,3 +1,6 @@
+import { DAILY, WEEKLY } from '@/constants'
+import * as constants from '@/constants/rgularConst'
+
 export const getEventsMapper = response => {
   return response.reduce((events, resp) => {
     return events.concat(resp.result.items.map((item, index) => (
@@ -36,8 +39,8 @@ export const getOneEventMapper = response => {
 }
 
 export const eventForFastCreate = event => {
-  const afterData = event.date.toISOString().replace(/[\\.|\-|\\:]/g, '').slice(0, 8)
-  const daily = 'RRULE:FREQ=DAILY;INTERVAL=1;UNTIL=' + afterData + 'T220000Z'
+  const afterData = constants.afterDataForFastCreate(event)
+  const daily = constants.dailyForFastCreate(afterData)
 
   return {
     summary: event.title,
@@ -57,11 +60,10 @@ export const eventForFastCreate = event => {
 }
 
 export const eventForCreate = event => {
-  const afterData = event.endAfterDate.toISOString().replace(/[\\.|\-|\\:]/g, '').slice(0, 8)
+  const afterData = constants.afterDateForCreate(event)
 
-  const weekly = 'RRULE:FREQ=WEEKLY;BYDAY=' + event.daysForRepeat.join(',') +
-   ';INTERVAL=' + event.interval + ';UNTIL=' + afterData + 'T220000Z'
-  const daily = 'RRULE:FREQ=DAILY;INTERVAL=' + event.interval + ';UNTIL=' + afterData + 'T220000Z'
+  const weekly = constants.weeklyForCreate(event, afterData)
+  const daily = constants.dailyForCreate(event, afterData)
   let recurrenceData = ''
 
   switch (event.repeatFormat) {
@@ -133,16 +135,13 @@ export const eventForUpdateSaga = ({ values, recurrenceData }) => {
 
 export const recurrenceDataForUpdate = values => {
   let recurrenceData = ''
-  const weekly = 'RRULE:FREQ=WEEKLY;BYDAY=' + values.daysForRepeat.join(',') +
-    ';INTERVAL=' + values.interval + ';UNTIL=' +
-    values.endAfterDate.toISOString().replace(/[\\.|\-|\\:]/g, '').slice(0, 8) + 'T160000Z'
-  const daily = 'RRULE:FREQ=DAILY;INTERVAL=' + values.interval + ';UNTIL=' +
-    values.endAfterDate.toISOString().replace(/[\\.|\-|\\:]/g, '').slice(0, 8) + 'T160000Z'
+  const weekly = constants.weeklyForUpdate(values)
+  const daily = constants.dailyForUpdate(values)
 
   switch (values.repeatFormat) {
-    case 'DAILY': recurrenceData = daily
+    case DAILY: recurrenceData = daily
       break
-    case 'WEEKLY': recurrenceData = weekly
+    case WEEKLY: recurrenceData = weekly
       break
     default: recurrenceData = daily
       break

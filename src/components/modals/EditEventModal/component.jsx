@@ -21,6 +21,7 @@ import {
   recurrenceDataForUpdate,
   endAfterDateForUpdate,
 } from '@/helpers/mappers'
+import { DAILY } from '@/constants'
 
 const EditEventModal = ({ state, isOpen, closeEditDialog, onChangeEvent, onDeleteEvent }) => {
   const editEvent = values => {
@@ -86,7 +87,7 @@ const EditEventModal = ({ state, isOpen, closeEditDialog, onChangeEvent, onDelet
               startDate: state.eventsForChange.start,
               endDate: state.eventsForChange.end,
               color: state.eventsForChange.color - 1 || 0,
-              repeatFormat: state.eventsForChange.recurrence[0] || 'DAILY',
+              repeatFormat: state.eventsForChange.recurrence[0] || DAILY,
               interval: state.eventsForChange.recurrence[2] || 1,
               endAfterDate: endAfterDate || new Date(),
               daysForRepeat: daysForRepeat || [],

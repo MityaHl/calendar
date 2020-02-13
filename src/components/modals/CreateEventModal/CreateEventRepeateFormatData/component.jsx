@@ -15,6 +15,8 @@ import {
   KeyboardDatePicker,
 } from '@material-ui/pickers'
 
+import { WEEKLY } from '@/constants'
+
 import styles from './styles'
 
 const CreateEventSetRepeatFormatData = ({
@@ -38,7 +40,7 @@ const CreateEventSetRepeatFormatData = ({
         className={css(styles.textFields)}
         fullWidth />
       {
-        repeatFormat === 'WEEKLY' && (
+        repeatFormat === WEEKLY && (
           <FormControl className={css(styles.select)}>
             <InputLabel>Days for repeat</InputLabel>
             <Select

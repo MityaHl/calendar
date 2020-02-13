@@ -7,7 +7,6 @@ import styles from './styles'
 const CustomEventWrapper = ({ event, colors }) => {
   const colorNum = event.color
   const color = colors[colorNum - 1].background
-  console.log(event)
   return (
     <div
       style={{ backgroundColor: color }}

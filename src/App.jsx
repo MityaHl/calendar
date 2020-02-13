@@ -30,14 +30,15 @@ const App = ({ state, login, spinner, getColors }) => {
   return (
     <BrowserRouter>
       <Header />
-      <div>robit</div>
       {
-        state.spinner ? (<Spinner />) : (
-          <Switch>
-            <Route path="/login" exact component={Login} />
-            <PrivateRoute isAuth={!!state.login} component={MainPage} path="/" />
-          </Switch>
-        )
+        state.spinner
+          ? (<Spinner />)
+          : (
+            <Switch>
+              <Route path="/login" exact component={Login} />
+              <PrivateRoute isAuth={!!state.login} component={MainPage} path="/" />
+            </Switch>
+          )
       }
     </BrowserRouter>
   )

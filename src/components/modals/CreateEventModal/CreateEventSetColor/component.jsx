@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { css } from 'aphrodite'
 import PropTypes from 'prop-types'
 
@@ -8,13 +8,15 @@ import MenuItem from '@material-ui/core/MenuItem'
 import styles from './styles'
 
 const CreateEventSetColor = ({ colors, setColor }) => {
+  const setEventColor = useCallback(event => {
+    setColor(event.target.value + 1)
+  })
+
   return (
     <Select
       className={css(styles.select)}
       defaultValue={0}
-      onChange={event => {
-        setColor(event.target.value + 1)
-      }}
+      onChange={setEventColor}
     >
       {
         colors.map((color, index) => (

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import { css } from 'aphrodite'
 import Select from '@material-ui/core/Select'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -7,13 +7,15 @@ import PropTypes from 'prop-types'
 import styles from './styles'
 
 const CreateEventSetRepeatFormat = ({ repeatFormat, setRepeateFormat, state }) => {
+  const setEventRepeatFormat = useCallback(event => {
+    setRepeateFormat(event.target.value)
+  })
+
   return (
     <Select
       className={css(styles.select)}
       value={repeatFormat}
-      onChange={event => {
-        setRepeateFormat(event.target.value)
-      }}
+      onChange={setEventRepeatFormat}
     >
       {
         state.repeatFormat.map((format, index) => (

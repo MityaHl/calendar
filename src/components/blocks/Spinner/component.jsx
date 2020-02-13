@@ -5,6 +5,8 @@ import Grid from '@material-ui/core/Grid'
 
 import styles from './styles'
 
+const spinnerColor = '#1a73e8'
+
 const Spinner = () => {
   return (
     <Grid
@@ -14,7 +16,7 @@ const Spinner = () => {
       className={css(styles.spinner)}
     >
       <ClipLoader
-        color="#1a73e8"
+        color={spinnerColor}
         size={80} />
     </Grid>
   )
