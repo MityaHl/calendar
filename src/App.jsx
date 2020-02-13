@@ -30,6 +30,7 @@ const App = ({ state, login, spinner, getColors }) => {
   return (
     <BrowserRouter>
       <Header />
+      <div>robit</div>
       {
         state.spinner ? (<Spinner />) : (
           <Switch>
