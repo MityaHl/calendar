@@ -1,21 +1,16 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import { css } from 'aphrodite'
-import Select from '@material-ui/core/Select'
+import { Select } from 'formik-material-ui'
 import MenuItem from '@material-ui/core/MenuItem'
 import PropTypes from 'prop-types'
 
 import styles from './styles'
 
-const CreateEventSetRepeatFormat = ({ repeatFormat, setRepeateFormat, repeatTypes }) => {
-  const setEventRepeatFormat = useCallback(event => {
-    setRepeateFormat(event.target.value)
-  })
-
+const CreateEventSetRepeatFormat = ({ repeatTypes }) => {
   return (
     <Select
       className={css(styles.select)}
-      value={repeatFormat}
-      onChange={setEventRepeatFormat}
+      name="repeatFormat"
     >
       {
         repeatTypes.map((format, index) => (
@@ -30,8 +25,6 @@ const CreateEventSetRepeatFormat = ({ repeatFormat, setRepeateFormat, repeatType
 
 CreateEventSetRepeatFormat.propTypes = {
   repeatTypes: PropTypes.array,
-  setRepeateFormat: PropTypes.func,
-  repeatFormat: PropTypes.string,
 }
 
 export default CreateEventSetRepeatFormat

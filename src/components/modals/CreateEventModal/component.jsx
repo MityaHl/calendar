@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { css } from 'aphrodite'
+import { Formik } from 'formik'
 import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button'
 import Grid from '@material-ui/core/Grid'
-import TextField from '@material-ui/core/TextField'
+import { TextField } from 'formik-material-ui'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
 import InputLabel from '@material-ui/core/InputLabel'
 import CloseIcon from '@material-ui/icons/Close'
@@ -23,44 +23,29 @@ import styles from './styles'
 
 const CreateEventModal = ({ colors, weekDays, onAddEvent }) => {
   const [open, setOpen] = useState(constants.defaultOpen)
-  const [title, setTitle] = useState(constants.defaultTitle)
-  const [startDate, setStartDate] = useState(constants.defaultStartDate)
-  const [endDate, setEndDate] = useState(constants.defaultEndDate)
-  const [color, setColor] = useState(constants.defaultColor)
-  const [repeatFormat, setRepeateFormat] = useState(constants.defaultRepeateFormat)
-  const [daysForRepeat, setDaysForRepeat] = useState(constants.defaultDaysForRepeat)
-  const [interval, setInterval] = useState(constants.defaultInterval)
-  const [endAfterDate, setEndAfterDate] = useState(constants.defaultEndAfterDate)
 
   const handleClickOpen = () => {
     setOpen(true)
   }
 
   const handleClose = () => {
-    setTitle(constants.defaultTitle)
-    setStartDate(constants.defaultStartDate)
-    setEndDate(constants.defaultEndDate)
-    setColor(constants.defaultColor)
-    setRepeateFormat(constants.defaultRepeateFormat)
-    setDaysForRepeat(constants.defaultDaysForRepeat)
-    setInterval(constants.defaultInterval)
-    setEndAfterDate(constants.defaultEndAfterDate)
     setOpen(constants.defaultOpen)
   }
 
-  const addEvent = () => {
+  const addEvent = values => {
     onAddEvent({
-      title,
-      startDate,
-      endDate,
-      color,
-      repeatFormat,
-      daysForRepeat,
-      interval,
-      endAfterDate,
+      title: values.title,
+      startDate: values.startDate,
+      endDate: values.endDate,
+      color: values.color + 1,
+      repeatFormat: values.repeatFormat,
+      daysForRepeat: values.daysForRepeat,
+      interval: values.interval,
+      endAfterDate: values.endAfterDate,
     })
     handleClose()
   }
+
   return (
     <Grid
       container
@@ -99,44 +84,48 @@ const CreateEventModal = ({ colors, weekDays, onAddEvent }) => {
           </Grid>
         </Grid>
         <DialogContent>
-          <DialogContentText>
-            To create event, enter the following information...
-          </DialogContentText>
-          <TextField
-            label="Title"
-            type="text"
-            value={title}
-            onChange={event => {
-              setTitle(event.target.value)
+          <Formik
+            initialValues={{
+              title: constants.defaultTitle,
+              startDate: constants.defaultStartDate,
+              endDate: constants.defaultEndDate,
+              color: 0,
+              repeatFormat: constants.defaultRepeateFormat,
+              interval: constants.defaultInterval,
+              endAfterDate: constants.defaultEndAfterDate,
+              daysForRepeat: constants.defaultDaysForRepeat,
             }}
-            fullWidth />
-          <CreateEventDates
-            startDate={startDate}
-            setStartDate={setStartDate}
-            endDate={endDate}
-            setEndDate={setEndDate} />
-          <InputLabel className={css(styles.label)}>
-            Color
-          </InputLabel>
-          <CreateEventSetColor
-            colors={colors}
-            setColor={setColor} />
-          <CreateEventSetRepeatFormat
-            repeatFormat={repeatFormat}
-            setRepeateFormat={setRepeateFormat} />
-          <CreateEventRepeateFormatData
-            interval={interval}
-            setInterval={setInterval}
-            repeatFormat={repeatFormat}
-            daysForRepeat={daysForRepeat}
-            setDaysForRepeat={setDaysForRepeat}
-            weekDays={weekDays}
-            endAfterDate={endAfterDate}
-            setEndAfterDate={setEndAfterDate} />
+          >
+            {({
+              values,
+            }) => (
+              <form>
+                <TextField
+                  label="Title"
+                  type="text"
+                  name="title"
+                  fullWidth />
+                <CreateEventDates
+                  startDate="startDate"
+                  endDate="endDate" />
+                <InputLabel className={css(styles.label)}>
+                  Color
+                </InputLabel>
+                <CreateEventSetColor
+                  colors={colors} />
+                <CreateEventSetRepeatFormat />
+                <CreateEventRepeateFormatData
+                  repeatFormat={values.repeatFormat}
+                  daysForRepeat={values.daysForRepeat}
+                  weekDays={weekDays} />
+                <CreateEventButtons
+                  values={values}
+                  handleClose={handleClose}
+                  addEvent={addEvent} />
+              </form>
+            )}
+          </Formik>
         </DialogContent>
-        <CreateEventButtons
-          handleClose={handleClose}
-          addEvent={addEvent} />
       </Dialog>
     </Grid>
   )

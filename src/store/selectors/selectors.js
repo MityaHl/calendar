@@ -6,7 +6,7 @@ const getRepeatFormat = state => state.repeatFormat
 const getEvents = state => state.events
 const getAbility = state => state.changeAbility
 const getEventsForChange = state => state.eventsForChange
-const getWeekDays = state => state.eventsForChange
+const getWeekDays = state => state.weekDays
 const getSpinnerFromState = state => state.spinner
 
 export const getSpinner = createSelector(
