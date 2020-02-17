@@ -8,7 +8,7 @@ const moment = require('moment')
 
 const HeaderTitle = () => {
   return (
-    <Typography onWheel={()=>alert('111')} className={css(styles.title)}>
+    <Typography className={css(styles.title)}>
       {
         moment().format('MMMM, Do')
       }

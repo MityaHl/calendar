@@ -1,19 +1,25 @@
 import React from 'react'
 import { css } from 'aphrodite'
+import PropTypes from 'prop-types'
 import Button from '@material-ui/core/Button'
 
 import styles from './styles'
 
-const CreateEventButton = () => {
+const LogOutButton = ({ onLogOut }) => {
   return (
     <Button
       variant="outlined"
       color="primary"
       className={css(styles.button)}
+      onClick={onLogOut}
     >
       LogOut
     </Button>
   )
 }
 
-export default CreateEventButton
+LogOutButton.propTypes = {
+  onLogOut: PropTypes.func,
+}
+
+export default LogOutButton

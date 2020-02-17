@@ -1,24 +1,27 @@
 import React from 'react'
 import { css } from 'aphrodite'
+import PropTypes from 'prop-types'
 import Grid from '@material-ui/core/Grid'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 
 import HeaderTitle from './HeaderTitle'
-import HeaderMenu from './HeaderMenu'
 import LogOutButton from '@/components/controls/LogOutButton'
-import CreateEventButton from '@/components/controls/CreateEventButton'
+import CreateEventModal from '@/components/modals/CreateEventModal'
 
 import styles from './style'
 
-const Header = () => {
+const Header = ({ login }) => {
   return (
-    <AppBar position="static" className={css(styles.header)}>
-      <Toolbar>
+    <AppBar
+      position="static"
+      className={css(styles.header)}
+    >
+      <Toolbar className={css(styles.toolbar)}>
         <Grid container alignItems="center">
           <Grid
             item
-            xs={3}
+            xs={2}
             container
             direction="row"
             justify="center"
@@ -28,21 +31,35 @@ const Header = () => {
           </Grid>
           <Grid
             item
-            xs={7}
+            xs={8}
             container
             direction="row"
-            justify="flex-start"
+            justify="center"
+            alignItems="center"
           >
-            <HeaderMenu />
-            <CreateEventButton />
+            {!!login && <CreateEventModal />}
           </Grid>
-          <Grid item xs={2} container>
-            <LogOutButton />
+          <Grid
+            item
+            xs={2}
+            container
+            direction="row"
+            justify="center"
+          >
+            {!!login && <LogOutButton />}
           </Grid>
         </Grid>
       </Toolbar>
     </AppBar>
   )
+}
+
+Header.defaultTypes = {
+  login: false,
+}
+
+Header.propTypes = {
+  login: PropTypes.string,
 }
 
 export default Header

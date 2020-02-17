@@ -2,8 +2,12 @@ import { StyleSheet } from 'aphrodite'
 
 export default StyleSheet.create({
   button: {
-    color: '#42db27',
-    borderColor: '#42db27',
-    marginLeft: '30px',
+    width: '100%',
+    '@media (max-width: 1100px)': {
+      fontSize: '20px',
+    },
+    '@media (max-width: 700px)': {
+      fontSize: '15px',
+    },
   },
 })

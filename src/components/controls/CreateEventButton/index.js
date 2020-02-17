@@ -1,3 +1,3 @@
-import CreateEventButton from './component'
+import CreateEventButton from './container'
 
 export default CreateEventButton
