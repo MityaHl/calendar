@@ -16,6 +16,7 @@ function loadEvents ({ recId, id }) {
 function * putData (action) {
   try {
     const data = yield call(loadEvents, action.payload)
+    console.log(data)
     yield put(onGetEvent(data))
   } catch (error) {
     console.log(error)

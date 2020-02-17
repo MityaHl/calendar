@@ -53,12 +53,12 @@ const EditEventModal = ({
   let daysForRepeat = []
   let endAfterDate = ''
 
-  if (eventsForChange.recurrence[3]) {
-    daysForRepeat = eventsForChange.recurrence[3].split(',')
+  if (eventsForChange.recurrence.days) {
+    daysForRepeat = eventsForChange.recurrence.days.split(',')
   }
   if (eventsForChange.creator === login &&
-    eventsForChange.recurrence[0] !== '') {
-    endAfterDate = endAfterDateForUpdate(eventsForChange.recurrence)
+    eventsForChange.recurrence.format !== '') {
+    endAfterDate = endAfterDateForUpdate(eventsForChange.recurrence.date)
   }
 
   return (

@@ -1,7 +1,7 @@
 import { GET_ONE_EVENT, CLEAR_ONE_EVENT } from '@/constants'
 
 const initialState = {
-  recurrence: ['', '', '', ''],
+  recurrence: [],
 }
 
 export default function eventsForChange (state = initialState, action) {

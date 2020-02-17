@@ -47,7 +47,7 @@ export const onAddFastEvent = data => ({
 export const closeEvent = () => ({
   type: CLEAR_ONE_EVENT,
   payload: {
-    recurrence: ['', '', '', ''],
+    recurrence: [],
   },
 })
 

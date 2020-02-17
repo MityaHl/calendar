@@ -19,6 +19,13 @@ export const getEventsMapper = response => {
 }
 
 export const getOneEventMapper = response => {
+  let recurrenceData = []
+  if (response.result.recurrence) {
+    recurrenceData = response.result.recurrence[0].slice(6).split(';').map((item, index) => {
+      return item.slice(item.indexOf('=') + 1)
+    })
+  }
+
   return {
     key: response.result.id,
     title: response.result.summary,
@@ -27,14 +34,13 @@ export const getOneEventMapper = response => {
     color: response.result.colorId,
     creator: response.result.creator.email,
     recurrence: response.result.recurrence ? (
-      response.result.recurrence[0].slice(6).split(';').map((item, index) => {
-        return item.slice(item.indexOf('=') + 1)
-      })
-    ) : (
-      [
-        '',
-      ]
-    ),
+      {
+        format: recurrenceData[0],
+        date: recurrenceData[1],
+        interval: recurrenceData[2],
+        days: recurrenceData[3],
+      }
+    ) : ({}),
   }
 }
 
